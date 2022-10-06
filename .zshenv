@@ -1,6 +1,6 @@
 autoload -U colors && colors
 
-export FZF_DEFAULT_COMMAND='fd -H --type f'
+export FZF_DEFAULT_COMMAND='rg --files --no-ignore-vcs --hidden'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 

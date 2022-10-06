@@ -1,7 +1,21 @@
-if ! command -v brew &> /dev/null; then
-    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+#!/bin/zsh
+
+if[ "$(uname)" = "Darwin" ]; then
+    if ! command -v brew &> /dev/null; then
+        /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    fi
+    brew install ripgrep
+    brew install fzf 
+    brew install neofetch 
+    brwe install ranger 
+    brew install zsh-autosuggestions
+else
+    sudo apt-get install ripgrep
+    sudo apt-get install fzf
+    sudo apt-get install neofetch
+    sudo apt-get install ranger
+    echo 'deb http://download.opensuse.org/repositories/shells:/zsh-users:/zsh-autosuggestions/Debian_9.0/ /' | sudo tee /etc/apt/sources.list.d/shells:zsh-users:zsh-autosuggestions.list
+    curl -fsSL https://download.opensuse.org/repositories/shells:zsh-users:zsh-autosuggestions/Debian_9.0/Release.key | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/shells_zsh-users_zsh-autosuggestions.gpg > /dev/null
+    sudo apt update
+    sudo apt install zsh-autosuggestions
 fi
-brew install fzf 
-brew install neofetch 
-brwe install ranger 
-brew install zsh-autosuggestions
