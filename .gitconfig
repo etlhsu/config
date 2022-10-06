@@ -1,0 +1,35 @@
+# SETUP YOUR GIT CONFIG!
+#
+# 1. In Terminal run:
+# touch ~/.gitconfig
+# open -a "TextEdit" ~/.gitconfig
+#
+# 2. Review and add the .gitconfig contents below
+[user]
+	name = Ethan Hsu
+	email = ethanhsuhsu@gmail.com
+	
+[alias]
+    # git can will do a simple amend commit
+	can = commit --amend --no-edit # git can will do a simple amend commit
+
+    # Goes from uncommitted changes on a new branch to a open PR
+    acpr = "!f() { git add -A && git commit -m \"$1\" && gh pr create; }; f"
+
+	# git acanu is great for updating a PR with changes
+    acanu = !sh -c 'git add -A && git commit --amend --no-edit && git push fork $(git rev-parse --abbrev-ref HEAD) -f'
+
+    # git cc will create a new contribution branch safely, ensuring you have checked out main
+    cc = "!f() { git checkout main && git pull origin main && git checkout -b $1; }; f"
+
+    # git xl will show you a prettier graph log view of commits
+    xl = !sh -c 'git log --graph --all --decorate --pretty=oneline --abbrev-commit'
+
+    # git bc will delete all your branches except main
+    bc = !sh -c 'git branch | grep -v " main$" | xargs git branch -D'
+    
+[core]
+
+# In Android Studio, Cmd+Shift+A (find action) → “Create Command-Line Launcher”
+# Then the studio command will be available
+	editor = studio --wait
