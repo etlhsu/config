@@ -7,3 +7,6 @@
 [submodule ".vim/pack/plugins/start/vim-auto-save"]
 	path = .vim/pack/plugins/start/vim-auto-save
 	url = https://github.com/907th/vim-auto-save.git
+[submodule ".vim/pack/plugins/start/fzf.vim"]
+	path = .vim/pack/plugins/start/fzf.vim
+	url = https://github.com/junegunn/fzf.vim.git

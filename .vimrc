@@ -76,7 +76,7 @@ set termguicolors
 
 set splitbelow
 set rtp+=/opt/homebrew/opt/fzf
-nmap <C-P> :FZF<CR>
+nmap <C-P> :Files<CR>
 set showcmd
 set clipboard=unnamed
 
@@ -85,3 +85,6 @@ let g:auto_save_silent = 1  " do not display the auto-save notification
 
 set autoread
 set smartcase
+
+set colorcolumn=100
+
