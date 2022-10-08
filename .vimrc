@@ -92,3 +92,6 @@ set backspace=indent,eol,start
 set wildmenu
 set wildoptions=pum
 " set wildmode=lastused:list:full
+
+set undofile
+set undodir=~/.vim/undo/
