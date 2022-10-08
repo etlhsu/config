@@ -69,7 +69,7 @@ if $COLORTERM == 'gnome-terminal'
 endif
 
 colorscheme darcula
-set termguicolors
+" set termguicolors
 
 " open terminal below all splits
 " cabbrev bterm bo term
@@ -78,7 +78,6 @@ set splitbelow
 set rtp+=/opt/homebrew/opt/fzf
 nmap <C-P> :Files<CR>
 set showcmd
-set clipboard=unnamed
 
 let g:auto_save = 1  " enable AutoSave on Vim startup
 let g:auto_save_silent = 1  " do not display the auto-save notification
@@ -88,3 +87,4 @@ set smartcase
 
 set colorcolumn=100
 
+set backspace=indent,eol,start

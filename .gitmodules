@@ -13,3 +13,6 @@
 [submodule ".vim/pack/plugins/start/vim-matrix-screensaver"]
 	path = .vim/pack/plugins/start/vim-matrix-screensaver
 	url = https://github.com/uguu-org/vim-matrix-screensaver.git
+[submodule ".vim/pack/plugins/start/YouCompleteMe"]
+	path = .vim/pack/plugins/start/YouCompleteMe
+	url = https://github.com/ycm-core/YouCompleteMe.git
