@@ -88,3 +88,7 @@ set smartcase
 set colorcolumn=100
 
 set backspace=indent,eol,start
+
+set wildmenu
+set wildoptions=pum
+" set wildmode=lastused:list:full
