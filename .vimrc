@@ -104,7 +104,7 @@ let g:netrw_hide = 1
 
 set ignorecase
 
-command! -nargs=? Ms :mks! ~/.vim/session/<args>.vim
+command! -nargs=1 Ms :mks! ~/.vim/session/<args>.vim
 command Mk :execute ":mks! " . v:this_session
-command! -nargs=? Ss :source ~/.vim/session/<args>.vim
+command! -nargs=1 Ss %bd!|:source ~/.vim/session/<args>.vim
 command Lss :!echo "$(ls ~/.vim/session/(*.vim|.vim) | tr '\n' ' ' | xargs -n 1 basename)"
