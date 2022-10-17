@@ -7,7 +7,7 @@ set nu cc=100 wrap sm " Enable line numbers, line limit, line wrapping and match
 set et sta ai si ts=4 shiftwidth=4 " Use 4 spaces instead of tabs and auto/smart indents
 set backspace=indent,eol,start ttm=5 nocp " Make escape and backspace work, disable vi compat
 set sb " Open windows from below
-set ar awa "Read files when changed externally and write upon quit
+set ar awa | let g:auto_save = 1 | let g:auto_save_silent = 1 | "Enable auto-read, write and save
 set undofile udir=~/.vim/undo/ " Stores undos
 set ls=2 sc " Always show status line and show command being typed in
 set nobk nowb noswf lz " Disable backups and enable lazy redraw (for perf)
