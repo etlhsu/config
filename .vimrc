@@ -16,3 +16,10 @@ let g:netrw_winsize = 16 | let g:netrw_banner = 0 " Set netrw window size and hi
 let g:netrw_list_hide = '^\./$,^\.\./$,.DS_Store' | let g:netrw_hide = 1 " Hide annoying files
 syntax on | set t_Co=256 | colorscheme darcula " Enable synatx, use 256 colors and darcula theme
 set path+=** " Enables recursive searching
+
+set hidden
+autocmd BufReadPost *.kt setlocal filetype=kotlin
+
+let g:LanguageClient_serverCommands = {
+    \ 'kotlin': ["/Users/ethanhsu/Bundle/kotlin-language-server/server/build/install/server/bin/kotlin-language-server"],
+    \ }
