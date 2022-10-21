@@ -8,6 +8,7 @@ source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 
 set -o vi
 bindkey '\t' autosuggest-accept
+setopt autocd
 
 checkgitenv() {
   if [ ! -d ~/.prompt ]; then
