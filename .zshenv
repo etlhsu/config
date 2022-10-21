@@ -10,6 +10,11 @@ set -o vi
 bindkey '\t' autosuggest-accept
 setopt autocd
 
+mkcd() {
+   mkdir $1
+   cd $1
+}
+
 checkgitenv() {
   if [ ! -d ~/.prompt ]; then
     mkdir ~/.prompt
