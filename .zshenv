@@ -9,11 +9,6 @@ source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 set -o vi
 bindkey '\t' autosuggest-accept
 
-mkcd() {
-   mkdir $1
-   cd $1
-}
-
 checkgitenv() {
   if [ ! -d ~/.prompt ]; then
     mkdir ~/.prompt
