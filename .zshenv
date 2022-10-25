@@ -7,7 +7,7 @@ export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 
 set -o vi
-bindkey '\t' autosuggest-accept
+bindkey '^N' autosuggest-accept
 setopt autocd
 
 mkcd() {

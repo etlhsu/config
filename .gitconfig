@@ -27,9 +27,3 @@
 
     # git bc will delete all your branches except main
     bc = !sh -c 'git branch | grep -v " main$" | xargs git branch -D'
-    
-[core]
-
-# In Android Studio, Cmd+Shift+A (find action) → “Create Command-Line Launcher”
-# Then the studio command will be available
-	editor = studio --wait

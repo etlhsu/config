@@ -9,6 +9,7 @@ if[ "$(uname)" = "Darwin" ]; then
     brew install neofetch 
     brwe install ranger 
     brew install zsh-autosuggestions
+    brew install glow
 else
     sudo apt-get install ripgrep
     sudo apt-get install fzf
@@ -18,4 +19,8 @@ else
     curl -fsSL https://download.opensuse.org/repositories/shells:zsh-users:zsh-autosuggestions/Debian_9.0/Release.key | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/shells_zsh-users_zsh-autosuggestions.gpg > /dev/null
     sudo apt update
     sudo apt install zsh-autosuggestions
+    sudo mkdir -p /etc/apt/keyrings
+    curl -fsSL https://repo.charm.sh/apt/gpg.key | sudo gpg --dearmor -o /etc/apt/keyrings/charm.gpg
+    echo "deb [signed-by=/etc/apt/keyrings/charm.gpg] https://repo.charm.sh/apt/ * *" | sudo tee /etc/apt/sources.list.d/charm.list
+    sudo apt update && sudo apt install glow
 fi
