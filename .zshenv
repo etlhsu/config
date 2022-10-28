@@ -1,15 +1,27 @@
+# Environment variables
+export sdt="$HOME/shed/tips"
+
+
+# Configuration
 autoload -U colors && colors
 
 export FZF_DEFAULT_COMMAND='rg --files --no-ignore-vcs --hidden'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
-
 set -o vi
-bindkey '^N' autosuggest-accept
 setopt autocd
+autoload -Uz predict-on
+zle -N predict-on
+predict-on
+ bindkey '^N' end-of-line
+bindkey -M viins '^?' backward-delete-char
+bindkey -M viins '^H' backward-delete-char
 
+export PATH="$HOME/shed/bin:$PATH"
+
+
+# Utilities
 mkcd() {
    mkdir $1
    cd $1
