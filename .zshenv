@@ -1,5 +1,6 @@
 # Environment variables
 export sdt="$HOME/shed/tips"
+export sdb="$HOME/shed/bin"
 
 
 # Configuration

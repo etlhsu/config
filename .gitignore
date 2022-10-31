@@ -8,6 +8,9 @@
 !.gitconfig
 !config/
 !config/*
+!.config/
+!.config/spotify-player/
+!.config/spotify-player/app.toml
 !docs/
 !docs/*
 !.vim/
