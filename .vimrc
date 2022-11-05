@@ -16,5 +16,6 @@ let g:netrw_winsize = 16 | let g:netrw_banner = 0 " Set netrw window size and hi
 let g:netrw_list_hide = '^\./$,^\.\./$,.DS_Store' | let g:netrw_hide = 1 " Hide annoying files
 syntax on | set t_Co=256 | colorscheme darcula " Enable synatx, use 256 colors and darcula theme
 set path+=** " Enables recursive searching
-set hidden | autocmd BufReadPost *.kt setlocal filetype=kotlin " Support Kotlin
+au TextChanged,TextChangedI <buffer> silent write " Auto-saves current file
+set hidden | au BufReadPost *.kt setlocal filetype=kotlin " Support Kotlin
 source ~/.vim/rc.vim " Load config-specific file
