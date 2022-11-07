@@ -15,7 +15,7 @@ setopt autocd
 autoload -Uz predict-on
 zle -N predict-on
 predict-on
- bindkey '^N' end-of-line
+bindkey '\t' end-of-line
 bindkey -M viins '^?' backward-delete-char
 bindkey -M viins '^H' backward-delete-char
 
@@ -87,4 +87,3 @@ minprompt() {
    PROMPT="$(cat ${prompt_root}/vcs_prompt.txt) $fg[green]%~${NEWLINE}$fg[default]%# "
   fi
 }
-
