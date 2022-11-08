@@ -28,3 +28,6 @@ fi
 curl https://sh.rustup.rs -sSf | sh
 cargo install hackernews_tui
 cargo install spotify_player --features image,streaming,lyric-finder
+
+git submodule init
+git submodule update
