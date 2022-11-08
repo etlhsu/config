@@ -15,7 +15,7 @@ setopt autocd
 autoload -Uz predict-on
 zle -N predict-on
 predict-on
-bindkey '\t' end-of-line
+bindkey '^N' end-of-line
 bindkey -M viins '^?' backward-delete-char
 bindkey -M viins '^H' backward-delete-char
 

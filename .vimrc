@@ -14,6 +14,10 @@ set nobk nowb noswf lz " Disable backups and enable lazy redraw (for perf)
 let g:netrw_browse_split = 4 "Sticky window opens selected file in previous split
 let g:netrw_winsize = 16 | let g:netrw_banner = 0 " Set netrw window size and hide the banner
 let g:netrw_list_hide = '^\./$,^\.\./$,.DS_Store' | let g:netrw_hide = 1 " Hide annoying files
+set statusline+=%#warningmsg# " Recommended syntastic settings
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+let g:syntastic_kotlin_checkers = ['kotlinc']
 syntax on | set t_Co=256 | colorscheme darcula " Enable synatx, use 256 colors and darcula theme
 set path+=** " Enables recursive searching
 set shm+=c shm+=l completeopt=menuone,popup
