@@ -1,0 +1,5 @@
+if [ "$(uname)" = "Darwin" ]; then
+  /opt/homebrew/bin/bat $*
+else
+  batcat $*
+fi

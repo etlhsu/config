@@ -1,7 +1,7 @@
 # Environment variables
 export sdt="$HOME/shed/tips"
 export sdb="$HOME/shed/bin"
-
+export sda="$HOME/shed/archive"
 
 # Configuration
 autoload -U colors && colors
@@ -87,3 +87,9 @@ minprompt() {
    PROMPT="$(cat ${prompt_root}/vcs_prompt.txt) $fg[green]%~${NEWLINE}$fg[default]%# "
   fi
 }
+
+export FZF_DEFAULT_OPTS="-e --scheme=path --cycle --info=inline --preview='bat --color=always --style=numbers --line-range=:500 {}' --bind shift-up:preview-page-up,shift-down:preview-page-down"
+
+if [ "$(uname)" != "Darwin" ]; then 
+  alias -g bat=batcat
+fi
