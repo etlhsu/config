@@ -6,9 +6,6 @@ export sda="$HOME/shed/archive"
 # Configuration
 autoload -U colors && colors
 
-export FZF_DEFAULT_COMMAND='rg --files --no-ignore-vcs --hidden'
-export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 set -o vi
 setopt autocd
@@ -19,6 +16,13 @@ bindkey '^N' end-of-line
 bindkey -M viins '^?' backward-delete-char
 bindkey -M viins '^H' backward-delete-char
 
+spin-key() spin refresh
+zle -N spin-key 
+bindkey '^E' spin-key
+
+export FZF_DEFAULT_COMMAND='rg --files --no-ignore-vcs --hidden'
+export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 export PATH="$HOME/shed/bin:$PATH"
 
 

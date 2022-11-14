@@ -1,28 +1,19 @@
 #!/bin/zsh
 
+pkgs=('bat' 'fzf' 'entr' 'ktlint' 'neofetch' 'newsboat' 'ranger' 'ripgrep' 'shfmt' 'tailscale' 'tmux')
 if [ "$(uname)" = "Darwin" ]; then
-    if ! command -v brew &> /dev/null; then
-        /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-    fi
-    brew install ripgrep
-    brew install fzf 
-    brew install neofetch 
-    brew install ranger 
-    brew install bat
-    brew install tmux
-    brew install newsboat
-
+	if ! command -v brew &>/dev/null; then
+		/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+	fi
+	brew install $pkgs
 else
-    sudo apt-get install ripgrep
-    sudo apt-get install fzf
-    sudo apt-get install neofetch
-    sudo apt-get install ranger
-    sudo apt-get install bat
-    sudo apt-get install tmux
-    sudo apt-get install newsboat
+	sudo apt install $pkgs
 fi
 
-curl https://sh.rustup.rs -sSf | sh
+if ! command -v cargo &>/dev/null ; then
+  curl https://sh.rustup.rs -sSf | sh
+fi
+
 cargo install hackernews_tui
 cargo install spotify_player --features image,streaming,lyric-finder
 

@@ -1,0 +1,40 @@
+#!/usr/bin/env zsh
+
+[[ ! -d "$HOME/shed/.spin" ]] && mkdir -p $HOME/shed/.spin
+if [[ $1 == "refresh" ]]; then
+  echo "" > $HOME/shed/.spin/.all
+  echo "" > $HOME/shed/.spin/.key
+  exit 0
+elif [[ $1 == "change" ]]; then
+  echo "" > $HOME/shed/.spin/.all
+  exit 0
+fi
+
+for i in {2..$#}; do
+  cmd+=$@[i]
+  if [[ $i -lt $# ]]; then
+    cmd+=" "
+  fi
+done
+
+if [[ -p /dev/stdin ]]; then
+  getinput() {
+    cat
+  }
+  cmd="$1 $cmd"
+else
+  if [[ $1 == "all" ]]; then 
+    [[ ! -f "$HOME/shed/.spin/.all" ]] && touch $HOME/shed/.spin/.all
+    file="$HOME/shed/.spin/.all"
+  elif [[ $1 == "none" ]]; then
+    [[ ! -f "$HOME/shed/.spin/.key" ]] && touch $HOME/shed/.spin/.key
+    file="$HOME/shed/.spin/.key"
+  else 
+    file="$1"
+  fi
+  getinput() {
+    echo "$file"
+  }
+fi
+
+getinput | entr -rs "$cmd"
