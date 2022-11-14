@@ -23,4 +23,4 @@ set hidden | au BufReadPost *.kt setlocal filetype=kotlin " Support Kotlin
 set rtp+=/usr/local/opt/fzf,/usr/share/doc/fzf/examples | map <C-p> :FZF<CR> " Enable FZF
 nnoremap <C-i> <C-w> <C-P> " Buffer switching using tab key
 map <C-E> :call system('spin refresh')<CR>" Force spin
-call system('[[ -f ~/.vim/rc.vim ]] && mkdir -p .vim && touch ~/.vim/rc.vim') | source ~/.vim/rc.vim " Load config-specific file
+call system('[[ ! -f ~/.vim/rc.vim ]] && mkdir -p .vim && touch ~/.vim/rc.vim') | source ~/.vim/rc.vim " Load config-specific file
