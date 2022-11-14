@@ -80,7 +80,7 @@ minprompt() {
       changes=""
     fi
     percent='%%'
-    branch_name="$(git branch --show-current)"
+    branch_name="$(git rev-parse --abbrev-ref HEAD)"
     if ! [ -z $branch_name ]; then
       branch_name="$branch_name"
     fi
