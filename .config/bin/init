@@ -7,7 +7,7 @@ if [ "$(uname)" = "Darwin" ]; then
 	fi
 	brew install $pkgs
 else
-	sudo apt install $pkgs
+	for pkg in $pkgs; do sudo apt install -m $pkg; done
 fi
 
 if ! command -v cargo &>/dev/null ; then

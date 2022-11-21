@@ -1,9 +1,0 @@
-[submodule ".vim/pack/plugins/start/darcula"]
-	path = .vim/pack/plugins/start/darcula
-	url = https://github.com/ethanhsuhsu/darcula.git
-[submodule ".vim/pack/plugins/start/kotlin-vim"]
-	path = .vim/pack/plugins/start/kotlin-vim
-	url = https://github.com/udalov/kotlin-vim.git
-[submodule ".vim/pack/plugins/start/syntastic"]
-	path = .vim/pack/plugins/start/syntastic
-	url = https://github.com/vim-syntastic/syntastic.git

@@ -1,7 +1,8 @@
-# Environment variables
-export sdt="$HOME/shed/tips"
-export sdb="$HOME/shed/bin"
-export sda="$HOME/shed/archive"
+# Environment Variables
+export cb="$HOME/.config/bin"
+export ct="$HOME/.config/tip"
+export ck="$HOME/.config/kit"
+
 
 # Configuration
 autoload -U colors && colors
@@ -11,7 +12,6 @@ set -o vi
 setopt autocd
 autoload -Uz predict-on
 zle -N predict-on
-predict-on
 bindkey '^N' end-of-line
 bindkey -M viins '^?' backward-delete-char
 bindkey -M viins '^H' backward-delete-char
@@ -23,7 +23,7 @@ bindkey '^E' spin-key
 export FZF_DEFAULT_COMMAND='rg --files --no-ignore-vcs --hidden'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-export PATH="$HOME/shed/bin:$PATH"
+export PATH="$HOME/.config/bin:$PATH"
 
 
 # Utilities
@@ -33,10 +33,6 @@ mkcd() {
 }
 
 checkgitenv() {
-  if [ ! -d ~/.prompt ]; then
-    mkdir ~/.prompt
-  fi
-  prompt_root=~/.prompt/$(basename $(git rev-parse --show-toplevel))
   if ! [ -f $prompt_root/current_env.txt ]; then
       touch $prompt_root/current_env.txt
     fi
@@ -52,13 +48,10 @@ checkgitenv() {
 }
 
 minprompt() {
-  prompt_root=~/.prompt/$(basename $(git rev-parse --show-toplevel))
+  prompt_root=~/.config/.prompt/$(basename $(git rev-parse --show-toplevel))
 
-  if [ ! -d ~/.prompt ]; then
-    mkdir ~/.prompt
-  fi
   if [ ! -d $prompt_root ]; then
-    mkdir $prompt_root
+    mkdir -p $prompt_root
   fi
   if ! [ -f $prompt_root/vcs_prompt.txt ]; then
     touch $prompt_root/vcs_prompt.txt

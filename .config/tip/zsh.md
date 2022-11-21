@@ -1,7 +1,6 @@
 # Zsh Tips
 
 ```shell
-
 # Choose from a list
 select out in a b c d; do
   echo "char: $out option: $REPLY"

@@ -1,0 +1,15 @@
+#! /usr/bin/env zsh
+
+choices=("Edit me doc" "Create Kotlin script" "Read news" )
+echo $choices
+select choice in $choices; do
+  case $REPLY in
+    0)
+      vim $me  
+    ;;
+    *)
+      echo "$REPLY is not a valid choice"
+  esac
+  break 
+done
+

@@ -1,12 +1,12 @@
 #!/usr/bin/env zsh
 
-[[ ! -d "$HOME/shed/.spin" ]] && mkdir -p $HOME/shed/.spin
+[[ ! -d "$HOME/.config/.spin" ]] && mkdir -p $HOME/.config/.spin
 if [[ $1 == "refresh" ]]; then
-  echo "" > $HOME/shed/.spin/.all
-  echo "" > $HOME/shed/.spin/.key
+  echo "" > $HOME/.config/.spin/.all
+  echo "" > $HOME/.config/.spin/.key
   exit 0
 elif [[ $1 == "change" ]]; then
-  echo "" > $HOME/shed/.spin/.all
+  echo "" > $HOME/.config/.spin/.all
   exit 0
 fi
 
@@ -24,11 +24,11 @@ if [[ -p /dev/stdin ]]; then
   cmd="$1 $cmd"
 else
   if [[ $1 == "all" ]]; then 
-    [[ ! -f "$HOME/shed/.spin/.all" ]] && touch $HOME/shed/.spin/.all
-    file="$HOME/shed/.spin/.all"
+    [[ ! -f "$HOME/.config/.spin/.all" ]] && touch $HOME/.config/.spin/.all
+    file="$HOME/.config/.spin/.all"
   elif [[ $1 == "none" ]]; then
-    [[ ! -f "$HOME/shed/.spin/.key" ]] && touch $HOME/shed/.spin/.key
-    file="$HOME/shed/.spin/.key"
+    [[ ! -f "$HOME/.config/.spin/.key" ]] && touch $HOME/.config/.spin/.key
+    file="$HOME/.config/.spin/.key"
   else 
     file="$1"
   fi

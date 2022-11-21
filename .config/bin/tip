@@ -1,0 +1,10 @@
+#! /usr/bin/env zsh
+
+LOCATION="$HOME/shed/tip/"
+NAME="$1"
+FILE="${LOCATION}${NAME}.md"
+if [[ -f $FILE ]]; then
+  bat $FILE
+else
+  vim $FILE
+fi
