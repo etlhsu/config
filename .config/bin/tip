@@ -1,6 +1,6 @@
 #! /usr/bin/env zsh
 
-LOCATION="$HOME/shed/tip/"
+LOCATION="$HOME/.config/tip/"
 NAME="$1"
 FILE="${LOCATION}${NAME}.md"
 if [[ -f $FILE ]]; then
