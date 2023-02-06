@@ -5,7 +5,7 @@ playback_refresh_duration_in_ms = 0
 cover_image_refresh_duration_in_ms = 200
 track_table_item_max_len = 32
 enable_media_control = false
-default_device = "spotify-player"
+default_device = "Terminal"
 play_icon = "⏸"
 pause_icon = "▶"
 cover_img_length = 40
@@ -13,8 +13,8 @@ cover_img_width = 15
 playback_window_width = 16
 
 [device]
-name = "spotify-player"
-device_type = "speaker"
+name = "Terminal"
+device_type = "computer"
 volume = 50
-bitrate = 160
+bitrate = 320
 audio_cache = false

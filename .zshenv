@@ -1,6 +1,7 @@
 # Environment Variables
 export cb="$HOME/.config/bin"
 export ct="$HOME/.config/tip"
+export cs="$HOME/.config/sample"
 export ck="$HOME/.config/kit"
 
 
@@ -85,7 +86,11 @@ minprompt() {
   fi
 }
 
-export FZF_DEFAULT_OPTS="-e --scheme=path --cycle --info=inline --preview='bat --color=always --style=numbers --line-range=:500 {}' --bind shift-up:preview-page-up,shift-down:preview-page-down"
+if command -v bat &>/dev/null; then
+  export FZF_DEFAULT_OPTS="-e --scheme=path --cycle --info=inline --preview='bat --color=always --style=numbers --line-range=:500 {}' --bind shift-up:preview-page-up,shift-down:preview-page-down"
+else
+  export FZF_DEFAULT_OPTS="-e --scheme=path --cycle --info=inline --preview='batcat --color=always --style=numbers --line-range=:500 {}' --bind shift-up:preview-page-up,shift-down:preview-page-down"
+fi
 
 if [ "$(uname)" != "Darwin" ]; then 
   alias -g bat=batcat

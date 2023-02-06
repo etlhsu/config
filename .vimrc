@@ -28,6 +28,8 @@ runtime ftplugin/man.vim
 
 map <C-E> :call system('spin refresh')<CR> | " Force spin
 
+command! Ter execute "ter" | execute "res 15"
+
 function ShowTip(tipname)
   let buffers = getbufinfo()
   let i = 0
@@ -43,6 +45,9 @@ function ShowTip(tipname)
     let i += 1
   endwhile
   let editname = expand("$HOME") . '/.config/tip/' . a:tipname . '.md'
+  let hiddenname = expand("$HOME") . '/.config/tip/.' . a:tipname . '.md'
+  if filereadable(hiddenname) | let editname = hiddenname | endif
+
   if exists("currBufName")
     call win_gotoid(win_findbuf(currBufNr)[0])
     execute "e " . editname
@@ -55,3 +60,5 @@ endfunction
 
 command! -nargs=1 Tip call ShowTip(<q-args>)
 command! -nargs=1 T call ShowTip(<q-args>)
+
+ab uenv #!/usr/bin/env

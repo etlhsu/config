@@ -1,8 +1,13 @@
 #! /usr/bin/env zsh
 
-LOCATION="$HOME/.config/tip/"
+LOCATION="$HOME/.config/tip"
 NAME="$1"
-FILE="${LOCATION}${NAME}.md"
+FILE="${LOCATION}/.${NAME}.md"
+if [[ -f $FILE ]]; then
+  bat $FILE
+  exit 0
+fi
+FILE="${LOCATION}/${NAME}.md"
 if [[ -f $FILE ]]; then
   bat $FILE
 else

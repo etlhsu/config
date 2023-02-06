@@ -11,7 +11,7 @@
 !.config/bin/*
 !.config/tip/
 !.config/tip/*
-.config/tip/me.md
+.config/tip/.*
 !.config/spotify-player/
 !.config/spotify-player/app.toml
 !.rgignore

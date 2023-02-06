@@ -1,9 +1,0 @@
-#!/bin/zsh
-
-for i in {1..$#}; do
-  query+=$@[i]
-  if [[ $i -lt $# ]]; then
-    query+="%20"
-  fi
-done
-open "https://google.com/search?q=$query"
