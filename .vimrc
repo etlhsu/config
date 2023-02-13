@@ -5,7 +5,7 @@ set hls is " Highlight search results and search incrementally
 set magic scs " For regular expressions turn magic on and enable smartcase searching
 set nu cc=100 wrap sm " Enable line numbers, line limit, line wrapping and matching braces
 set et sta ai si ts=2 shiftwidth=2 " Use 4 saces instead of tabs and auto/smart indents
-set backspace=indent,eol,start ttm=5 nocp " Make escape and backspace work, disable vi compat
+set backspace=indent,eol,start nocp " Make escape and backspace work, disable vi compat
 set sb " Open windows from below
 set ar | au FocusGained,BufEnter * checktime " Enable auto-read
 set awa | autocmd TextChanged * silent! write | call system('spin change')  " Enable auto-write
