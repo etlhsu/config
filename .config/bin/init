@@ -1,21 +1,20 @@
 #!/bin/zsh
 
-pkgs=('bat' 'fzf' 'entr' 'ktlint' 'neofetch' 'newsboat' 'ranger' 'ripgrep' 'shfmt' 'tailscale' 'tmux')
+pkgs=('bat' 'fzf' 'entr' 'ktlint' 'neofetch' 'ranger' 'ripgrep' 'shfmt' 'tailscale' 'tmux')
 if [ "$(uname)" = "Darwin" ]; then
-	if ! command -v brew &>/dev/null; then
-		/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-	fi
-	brew install $pkgs
+  if ! command -v brew &>/dev/null; then
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+  fi
+  brew install $pkgs
 else
-	for pkg in $pkgs; do sudo apt install -m $pkg; done
+  for pkg in $pkgs; do sudo apt install -m $pkg; done
 fi
 
-if ! command -v cargo &>/dev/null ; then
+if ! command -v cargo &>/dev/null; then
   curl https://sh.rustup.rs -sSf | sh
   source "$HOME/.cargo/env"
 fi
 
-cargo install hackernews_tui
 cargo install spotify_player --features image,streaming,lyric-finder
 
 git submodule init

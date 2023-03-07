@@ -16,6 +16,7 @@
 !.config/spotify-player/app.toml
 !.rgignore
 !.tmux.conf
+!.editorconfig
 
 !.newsboat/
 !.newsboat/config
