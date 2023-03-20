@@ -30,6 +30,8 @@ map <C-E> :call system('spin refresh')<CR> | " Force spin
 
 command! Ter execute "ter" | execute "res 15"
 
+command! -nargs=1 Tip call ShowTip(<q-args>)
+command! -nargs=1 T call ShowTip(<q-args>)
 function ShowTip(tipname)
   let buffers = getbufinfo()
   let i = 0
@@ -58,7 +60,30 @@ function ShowTip(tipname)
   endif
 endfunction
 
-command! -nargs=1 Tip call ShowTip(<q-args>)
-command! -nargs=1 T call ShowTip(<q-args>)
+command! -nargs=1 Pl call PrintLine('o', <q-args>)
+command! -nargs=1 Pli call PrintLine('i', <q-args>)
+command! -nargs=+ Plx call PrintLine(<f-args>)
+function PrintLine(cmd,content)
+  let extension = expand("%:e")
+  if g:plc > -1
+    let header = "(" . g:plc . ") " . g:baseheader
+    let g:plc = g:plc + 1
+  else
+    let header = g:baseheader
+  endif
+
+  if extension == "kt"
+    let statement = "println(\"" . header . a:content . ": ${" . a:content . "}\")"
+  endif
+  if extension == "java"
+    let statement = "System.out.println(\"" . header . a:content . ":\" + (" . a:content . "));"
+  endif
+  execute "normal! " . a:cmd . statement . "\<Esc>"
+endfunction
+
+let g:baseheader="Ethan: "
+command! -nargs=1 Plh execute "let g:baseheader=\"" . <q-args> . "\""
+let g:plc=-1
+command! -nargs=1 Plc execute "let g:plc=" . <q-args>
 
 ab uenv #!/usr/bin/env
