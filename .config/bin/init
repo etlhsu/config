@@ -1,6 +1,6 @@
 #!/bin/zsh
 
-pkgs=('bat' 'fzf' 'entr' 'ktlint' 'neofetch' 'nvim' 'ranger' 'ripgrep' 'shfmt' 'tailscale' 'tmux')
+pkgs=('fzf' 'entr' 'ktlint' 'neofetch' 'node' 'nvim' 'ranger' 'ripgrep' 'shfmt' 'tailscale' 'tmux')
 pkgs+=('bash-language-server' 'kotlin-language-server' 'lua-language-server')
 if [ "$(uname)" = "Darwin" ]; then
   if ! command -v brew &>/dev/null; then
@@ -10,6 +10,8 @@ if [ "$(uname)" = "Darwin" ]; then
 else
   for pkg in $pkgs; do sudo apt install -m $pkg; done
 fi
+
+npm install -g @astrojs/language-server
 
 if ! command -v cargo &>/dev/null; then
   curl https://sh.rustup.rs -sSf | sh

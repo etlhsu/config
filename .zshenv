@@ -1,8 +1,9 @@
 # Environment Variables
 export cb="$HOME/.config/bin"
-export ct="$HOME/.config/tip"
-export cs="$HOME/.config/sample"
 export ck="$HOME/.config/kit"
+export cn="$HOME/.config/nvim"
+export cs="$HOME/.config/sample"
+export ct="$HOME/.config/tip"
 
 export pr="$HOME/pile/repos"
 

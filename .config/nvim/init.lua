@@ -5,10 +5,16 @@ vim.opt.colorcolumn = '100'
 vim.opt.wrap = true
 vim.opt.tabstop = 2
 vim.opt.shiftwidth = 2
+vim.opt.smartindent = true
+vim.opt.expandtab = true
 vim.opt.splitbelow = true
 vim.opt.autowriteall = true
-vim.g.mapleader = " "
-vim.api.nvim_create_autocmd({'TextChanged', 'TextChangedI'}, { pattern = '*', command = 'silent! write'})
+vim.opt.undofile = true
+vim.g.mapleader = ' '
+vim.api.nvim_create_autocmd(
+  {'TextChanged', 'TextChangedI'},
+  { pattern = '*', command = 'silent! write'}
+)
 
 vim.g.netrw_browse_split = 4 -- Sticky window opens selected file in previous split
 vim.g.netrw_winsize = 30
@@ -16,10 +22,81 @@ vim.g.netrw_banner = 0 -- Hide banner
 vim.g.netrw_hide = 1
 vim.g.netrw_list_hide = '^./$,^../$,.DS_Store' -- Hide annoying files
 
-vim.cmd [[ colorscheme slate ]]
-vim.cmd [[ highlight Normal ctermfg=LightGrey ]]
-
 vim.keymap.set('t', '<Esc>', '<C-\\><C-n>')
+vim.api.nvim_create_user_command('Ter', function()
+		vim.cmd [[ below new | res 15 | startinsert | ter ]]
+	end,
+{})
+
+vim.cmd.colorscheme('slate')
+vim.cmd [[ 
+  highlight Normal ctermfg=LightGrey 
+	ab uenv #!/usr/bin/env
+]]
+
+function ShowTip(tipName)
+	local tipPattern = vim.env.HOME .. '/.config/tip/.*.md'
+	local buffers = vim.api.nvim_list_bufs()
+	local tipBuffer = nil
+	for _, buffer in ipairs(buffers) do
+		local bufferName = vim.api.nvim_buf_get_name(buffer)
+		if vim.api.nvim_buf_is_loaded(buffer) and string.gmatch(bufferName, tipPattern)() == nil then
+			tipBuffer = buffer
+		end
+	end
+
+	local regularTipLocation = vim.env.HOME .. '/.config/tip/' .. tipName .. '.md'
+	local hiddenTipLocation = vim.env.HOME .. '/.config/tip/.' .. tipName .. '.md'
+	local tipLocation = regularTipLocation
+	if vim.fn.filereadable(hiddenTipLocation) then tipLocation = hiddenTipLocation end
+
+	if not tipBuffer == nil then
+		vim.api.nvim_set_current_buf(tipBuffer)
+    vim.cmd('e ' .. tipLocation)
+	else
+    vim.cmd('below new ' .. tipLocation)
+		vim.cmd('set nonumber | highlight EndOfBuffer ctermfg=bg guifg=bg')
+	end
+end
+
+vim.api.nvim_create_user_command('Tip', function(opts) ShowTip(opts.args) end, {nargs = 1})
+vim.api.nvim_create_user_command('T', function(opts) ShowTip(opts.args) end, {nargs = 1})
+
+PrintLineCount = -1
+PrintLineHeader = 'Ethan: '
+function PrintLine(motion, content)
+	local header = PrintLineHeader
+  if PrintLineCount > -1 then
+  	header = '(' .. PrintLineCount .. ') ' .. PrintLineHeader
+		PrintLineCount  = PrintLineCount + 1
+  end
+
+	local filetype = vim.bo.filetype
+	local message = ''
+	if  filetype == 'kotlin' then
+		message =  'println("' .. header .. content .. ': ${' .. content .. '}")'
+	elseif filetype == 'java' then
+		message = 'System.out.println("' .. header .. content .. ': " + (' .. content .. '));'
+  end
+	local escapeCode = vim.api.nvim_replace_termcodes('<Esc>', true, false, true)
+	vim.api.nvim_feedkeys(motion .. message .. escapeCode, 'n', false)
+end
+
+vim.api.nvim_create_user_command('Pl', function(opts) PrintLine('o',opts.args) end, {nargs = '+'})
+vim.api.nvim_create_user_command('Pla', function(opts) PrintLine('a',opts.args) end, {nargs = '+'})
+vim.api.nvim_create_user_command('Plx', function(opts)
+	local content = ''
+	for index, arg in ipairs(opts.fargs) do
+		if index > 1 then content = content .. arg end
+	end
+	PrintLine(opts.fargs[1], content)
+end, {nargs = '+'})
+vim.api.nvim_create_user_command('Plc', function(opts) 
+	PrintLineCounter = opts.args
+end, {nargs = 1})
+vim.api.nvim_create_user_command('Plh', function(opts) 
+	PrintLineHeader = opts.args 
+end, {nargs = 1})
 
 local ensure_packer = function()
   local fn = vim.fn
@@ -47,6 +124,13 @@ require('packer').startup(function(use)
   use 'L3MON4D3/LuaSnip' -- Snippets plugin
 
 	use 'udalov/kotlin-vim'
+  use {
+    'nvim-treesitter/nvim-treesitter',
+      run = function()
+        local ts_update = require('nvim-treesitter.install').update({ with_sync = true })
+        ts_update()
+    end,
+  }
 
   -- Automatically set up your configuration after cloning packer.nvim
   -- Put this at the end after all plugins
@@ -63,14 +147,16 @@ vim.keymap.set('n', '<leader>fh', builtin.help_tags, {})
 
 -- Setup language servers.
 local lspconfig = require('lspconfig')
+lspconfig.astro.setup {}
 lspconfig.bashls.setup {
-	filetypes = { "sh", "zsh" }
+	filetypes = { 'sh', 'zsh' }
 }
 lspconfig.kotlin_language_server.setup {
-	root_dir = lspconfig.util.root_pattern("settings.gradle", "*.kts"),
 	single_file_support = true,
 }
 lspconfig.lua_ls.setup {
+	root_dir = lspconfig.util.root_pattern('.luarc.json', '.luarc.jsonc', '.luacheckrc',
+    '.stylua.toml', 'stylua.toml', 'selene.toml', 'selene.yml', vim.env.HOME .. '/.nvim/config'),
   settings = {
     Lua = {
       runtime = {
@@ -83,7 +169,8 @@ lspconfig.lua_ls.setup {
       },
       workspace = {
         -- Make the server aware of Neovim runtime files
-        library = vim.api.nvim_get_runtime_file("", true),
+        library = vim.api.nvim_get_runtime_file('', true),
+				checkThirdParty = false, -- Prevent Luassert popup https://github.com/neovim/nvim-lspconfig/issues/1700
       },
       -- Do not send telemetry data containing a randomized but unique identifier
       telemetry = {
@@ -132,7 +219,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
 })
 
 -- Add additional capabilities supported by nvim-cmp
-local capabilities = require("cmp_nvim_lsp").default_capabilities()
+local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
 -- Enable some language servers with the additional completion capabilities offered by nvim-cmp
 local servers = { 'clangd', 'rust_analyzer', 'pyright', 'tsserver' }
@@ -187,3 +274,38 @@ cmp.setup {
     { name = 'luasnip' },
   },
 }
+
+
+require('nvim-treesitter.configs').setup {
+  -- A list of parser names, or "all"
+  ensure_installed = { 'astro', 'bash', 'css', 'cpp', 'html', 'java', 'json', 'kotlin', 'lua',
+    'tsx', 'typescript', 'vimdoc'
+  },
+
+  -- Install parsers synchronously (only applied to `ensure_installed`)
+  sync_install = false,
+
+  -- Automatically install missing parsers when entering buffer
+  -- Recommendation: set to false if you don't have `tree-sitter` CLI installed locally
+  auto_install = false,
+
+  highlight = {
+    enable = true,
+
+    -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
+    -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
+    -- Using this option may slow down your editor, and you may see some duplicate highlights.
+    -- Instead of true it can also be a list of languages
+    additional_vim_regex_highlighting = false,
+  },
+}
+
+vim.api.nvim_create_autocmd({'BufEnter','BufAdd','BufNew','BufNewFile','BufWinEnter'}, {
+  group = vim.api.nvim_create_augroup('TS_FOLD_WORKAROUND', {}),
+  callback = function()
+    vim.opt.foldmethod     = 'expr'
+    vim.opt.foldexpr       = 'nvim_treesitter#foldexpr()'
+  end
+})
+
+vim.opt.foldenable = false
