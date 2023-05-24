@@ -1,6 +1,6 @@
 #!/bin/zsh
 
-pkgs=('fzf' 'entr' 'ktlint' 'neofetch' 'node' 'nvim' 'ranger' 'ripgrep' 'shfmt' 'tailscale' 'tmux')
+pkgs=('fzf' 'entr' 'ktlint' 'neofetch' 'node' 'neovim' 'ranger' 'ripgrep' 'shfmt' 'tailscale' 'tmux')
 pkgs+=('bash-language-server' 'kotlin-language-server' 'lua-language-server')
 if [ "$(uname)" = "Darwin" ]; then
   if ! command -v brew &>/dev/null; then

@@ -27,3 +27,6 @@
 
     # git bc will delete all your branches except main
     bc = !sh -c 'git branch | grep -v " main$" | xargs git branch -D'
+
+[core]
+	editor = nvim

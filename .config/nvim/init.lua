@@ -10,9 +10,12 @@ vim.opt.expandtab = true
 vim.opt.splitbelow = true
 vim.opt.autowriteall = true
 vim.opt.undofile = true
+vim.opt.swapfile = false
+vim.opt.backup = false
+vim.opt.writebackup = false
 vim.g.mapleader = ' '
 vim.api.nvim_create_autocmd(
-  {'TextChanged', 'TextChangedI'},
+  {'InsertLeavePre', 'TextChanged'},
   { pattern = '*', command = 'silent! write'}
 )
 
@@ -22,7 +25,7 @@ vim.g.netrw_banner = 0 -- Hide banner
 vim.g.netrw_hide = 1
 vim.g.netrw_list_hide = '^./$,^../$,.DS_Store' -- Hide annoying files
 
-vim.keymap.set('t', '<Esc>', '<C-\\><C-n>')
+vim.keymap.set('t', '<C-w>', '<C-\\><C-n><C-w>')
 vim.api.nvim_create_user_command('Ter', function()
 		vim.cmd [[ below new | res 15 | startinsert | ter ]]
 	end,
