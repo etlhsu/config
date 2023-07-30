@@ -20,10 +20,9 @@ docs/.*
 !.local/share/
 !.local/share/nvim/
 !.local/share/nvim/site/
-!.local/share/nvim/site/pack
-!.local/share/nvim/site/pack/packer/
-!.local/share/nvim/site/pack/packer/start/
-!.local/share/nvim/site/pack/packer/start/packer.nvim/
-!.local/share/nvim/site/pack/packer/start/packer.nvim/*
+!.local/share/nvim/site/pack/
+!.local/share/nvim/site/pack/plugins/
+!.local/share/nvim/site/pack/plugins/start/
+!.local/share/nvim/site/pack/plugins/start/*
 
 **/.DS_Store

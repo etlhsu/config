@@ -1,0 +1,40 @@
+[submodule ".local/share/nvim/site/pack/packer/start/packer.nvim"]
+	path = .local/share/nvim/site/pack/packer/start/packer.nvim
+	url = https://github.com/wbthomason/packer.nvim.git
+	branch = master
+[submodule ".local/share/nvim/site/pack/plugins/start/telescope.nvim"]
+	path = .local/share/nvim/site/pack/plugins/start/telescope.nvim
+	url = https://github.com/nvim-telescope/telescope.nvim.git
+	branch = master
+[submodule ".local/share/nvim/site/pack/plugins/start/plenary.nvim"]
+	path = .local/share/nvim/site/pack/plugins/start/plenary.nvim
+	url = https://github.com/nvim-lua/plenary.nvim.git
+	branch = master
+[submodule ".local/share/nvim/site/pack/plugins/start/nvim-treesitter.nvim"]
+	path = .local/share/nvim/site/pack/plugins/start/nvim-treesitter.nvim
+	url = https://github.com/nvim-treesitter/nvim-treesitter.git
+	branch = master
+[submodule ".local/share/nvim/site/pack/plugins/start/lsp-zero.nvim"]
+	path = .local/share/nvim/site/pack/plugins/start/lsp-zero.nvim
+	url = https://github.com/VonHeikemen/lsp-zero.nvim.git
+	branch = v2.x
+[submodule ".local/share/nvim/site/pack/plugins/start/nvim-lspconfig"]
+	path = .local/share/nvim/site/pack/plugins/start/nvim-lspconfig
+	url = https://github.com/neovim/nvim-lspconfig.git
+	branch = master
+[submodule ".local/share/nvim/site/pack/plugins/start/nvim-cmp"]
+	path = .local/share/nvim/site/pack/plugins/start/nvim-cmp
+	url = https://github.com/hrsh7th/nvim-cmp.git
+	branch = main
+[submodule ".local/share/nvim/site/pack/plugins/start/cmp-nvim-lsp"]
+	path = .local/share/nvim/site/pack/plugins/start/cmp-nvim-lsp
+	url = https://github.com/hrsh7th/cmp-nvim-lsp.git
+	branch = main
+[submodule ".local/share/nvim/site/pack/plugins/start/LuaSnip"]
+	path = .local/share/nvim/site/pack/plugins/start/LuaSnip
+	url = https://github.com/L3MON4D3/LuaSnip.git
+	branch = master
+[submodule ".local/share/nvim/site/pack/plugins/start/kotlin-vim"]
+	path = .local/share/nvim/site/pack/plugins/start/kotlin-vim
+	url = https://github.com/udalov/kotlin-vim.git
+	branch = master
