@@ -1,15 +1,15 @@
-#! /usr/bin/env zsh
+#!/usr/bin/env sh
 
-LOCATION="$HOME/.config/tip"
+LOCATION="$HOME/docs"
 NAME="$1"
 FILE="${LOCATION}/.${NAME}.md"
 if [[ -f $FILE ]]; then
-  bat $FILE
+  cat $FILE
   exit 0
 fi
 FILE="${LOCATION}/${NAME}.md"
 if [[ -f $FILE ]]; then
-  bat $FILE
+  cat $FILE
 else
-  vim $FILE
+  nvim $FILE
 fi

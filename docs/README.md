@@ -9,7 +9,8 @@ cd ~ # Be in your user folder
 git init # Create an empty git repo
 git remote add origin https://github.com/ethanhsuhsu/config.git # Add remote repo
 git pull origin main -f # Pull from remote repo (may need to remove conflicting files and try again)
-zsh && init # Refresh terminal and download packages
+zsh # Refresh terminal
+init # Download packages
 ```
 
 ## Where is .zshrc?

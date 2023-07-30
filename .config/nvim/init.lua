@@ -64,7 +64,6 @@ function ShowDoc(docName)
 	local hiddenDocLocation = docPath .. '/.' .. docName .. '.md'
 	local docLocation = regularDocLocation
 	if vim.fn.filereadable(hiddenDocLocation) == false then docLocation = hiddenDocLocation end
-  print(docLocation)
 
 	if not docBuffer == nil then
 		vim.api.nvim_set_current_buf(docBuffer)
@@ -114,62 +113,65 @@ vim.api.nvim_create_user_command('Plh', function(opts)
 	PrintLineHeader = opts.args
 end, {nargs = 1})
 
-require('packer').startup(function(use)
-	use 'wbthomason/packer.nvim'
+local hasPacker,packer = pcall(require,"packer")
+if hasPacker then 
+  packer.startup(function(use)
+    use 'wbthomason/packer.nvim'
 
-	use { 'nvim-telescope/telescope.nvim', tag = '0.1.2', requires = { {'nvim-lua/plenary.nvim'} } }
-  use('nvim-treesitter/nvim-treesitter', { run = ':TSUpdate'})
-  use {
-    'VonHeikemen/lsp-zero.nvim',
-    branch = 'v2.x',
-    requires = {
-      {'neovim/nvim-lspconfig'}, {'hrsh7th/nvim-cmp'}, {'hrsh7th/cmp-nvim-lsp'}, {'L3MON4D3/LuaSnip'},
+    use { 'nvim-telescope/telescope.nvim', tag = '0.1.2', requires = { {'nvim-lua/plenary.nvim'} } }
+    use('nvim-treesitter/nvim-treesitter', { run = ':TSUpdate'})
+    use {
+      'VonHeikemen/lsp-zero.nvim',
+      branch = 'v2.x',
+      requires = {
+        {'neovim/nvim-lspconfig'}, {'hrsh7th/nvim-cmp'}, {'hrsh7th/cmp-nvim-lsp'}, {'L3MON4D3/LuaSnip'},
+      }
     }
-  }
-	use 'udalov/kotlin-vim'
-end)
+    use 'udalov/kotlin-vim'
+  end)
 
-require('telescope').setup{
-  defaults = {
-    layout_config = {
-      preview_width = 0.42,
+  require('telescope').setup{
+    defaults = {
+      layout_config = {
+        preview_width = 0.42,
+      },
     },
-  },
-}
-local builtin = require('telescope.builtin')
-vim.keymap.set('n', '<C-p>', builtin.find_files)
-vim.keymap.set('n', '<leader>ff', function() builtin.find_files({find_command = {'rg', '--files', '--no-ignore-vcs',}}) end)
-vim.keymap.set('n', '<leader>fg', builtin.live_grep)
-vim.keymap.set('n', '<leader>fb', builtin.buffers)
-vim.keymap.set('n', '<leader>fh', builtin.help_tags)
-vim.keymap.set('n', '<leader>fo', builtin.oldfiles)
+  }
+  local builtin = require('telescope.builtin')
+  vim.keymap.set('n', '<C-p>', builtin.find_files)
+  vim.keymap.set('n', '<leader>ff', function() builtin.find_files({find_command = {'rg', '--files', '--no-ignore-vcs',}}) end)
+  vim.keymap.set('n', '<leader>fg', builtin.live_grep)
+  vim.keymap.set('n', '<leader>fb', builtin.buffers)
+  vim.keymap.set('n', '<leader>fh', builtin.help_tags)
+  vim.keymap.set('n', '<leader>fo', builtin.oldfiles)
 
-require('nvim-treesitter.configs').setup {
-  -- A list of parser names, or "all"
-  ensure_installed = { 'astro', 'bash', 'css', 'cpp', 'html', 'java', 'json', 'kotlin', 'lua',
-    'tsx', 'typescript', 'vimdoc'
-  },
-  highlight = { enable = true },
-}
+  require('nvim-treesitter.configs').setup {
+    -- A list of parser names, or "all"
+    ensure_installed = { 'astro', 'bash', 'css', 'cpp', 'html', 'java', 'json', 'kotlin', 'lua',
+      'tsx', 'typescript', 'vimdoc'
+    },
+    highlight = { enable = true },
+  }
 
-local lsp = require('lsp-zero').preset({})
-lsp.on_attach(function(client, bufnr)
-  lsp.default_keymaps({buffer = bufnr})  -- see :help lsp-zero-keybindings for keymaps
-end)
--- https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
-lsp.setup_servers({'astro','bashls','kotlin_language_server','lua_ls'})
--- (Optional) Configure lua language server for neovim
-local lspconfig = require('lspconfig')
-lspconfig.lua_ls.setup(lsp.nvim_lua_ls({
-  root_dir = lspconfig.util.root_pattern('.luarc.json', vim.env.HOME .. '/.nvim/config'),
-}))
-local cmp = require('cmp')
-lsp.setup_nvim_cmp({
-    mapping = {
-      ["<C-p>"] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Insert }),
-      ["<C-n>"] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Insert }),
-      ["<C-y>"] = cmp.mapping.confirm({ select = true }),
-      ["<C-space>"] = cmp.mapping.complete(),
-    }
-  })
-lsp.setup()
+  local lsp = require('lsp-zero').preset({})
+  lsp.on_attach(function(client, bufnr)
+    lsp.default_keymaps({buffer = bufnr})  -- see :help lsp-zero-keybindings for keymaps
+  end)
+  -- https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
+  lsp.setup_servers({'astro','bashls','kotlin_language_server','lua_ls'})
+  -- (Optional) Configure lua language server for neovim
+  local lspconfig = require('lspconfig')
+  lspconfig.lua_ls.setup(lsp.nvim_lua_ls({
+    root_dir = lspconfig.util.root_pattern('.luarc.json', vim.env.HOME .. '/.nvim/config'),
+  }))
+  local cmp = require('cmp')
+  lsp.setup_nvim_cmp({
+      mapping = {
+        ["<C-p>"] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Insert }),
+        ["<C-n>"] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Insert }),
+        ["<C-y>"] = cmp.mapping.confirm({ select = true }),
+        ["<C-space>"] = cmp.mapping.complete(),
+      }
+    })
+  lsp.setup()
+end

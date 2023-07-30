@@ -14,4 +14,4 @@ fi
 npm install -g @astrojs/language-server
 
 git submodule init
-git submodule update
+git submodule update --remote

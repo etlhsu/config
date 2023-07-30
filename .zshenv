@@ -3,13 +3,13 @@ export cb="$HOME/.config/bin"
 export ck="$HOME/.config/kit"
 export cn="$HOME/.config/nvim"
 export cs="$HOME/.config/sample"
-export ct="$HOME/.config/tip"
 
-export pr="$HOME/pile/repos"
+export pb="$HOME/personal/bin"
+export ps="$HOME/personal/space"
+export pp="$HOME/personal/pile"
 
 # Configuration
 autoload -U colors && colors
-
 
 set -o vi
 setopt autocd
@@ -27,6 +27,7 @@ export FZF_DEFAULT_COMMAND='rg --files --no-ignore-vcs --hidden'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 path+="$HOME/.config/bin"
+path+="$HOME/personal/bin"
 export PATH
 
 # Utilities
@@ -51,16 +52,19 @@ checkgitenv() {
 }
 
 minprompt() {
-  prompt_root=~/.config/.prompt/$(basename $(git rev-parse --show-toplevel))
 
-  if [ ! -d $prompt_root ]; then
-    mkdir -p $prompt_root
-  fi
-  if ! [ -f $prompt_root/vcs_prompt.txt ]; then
-    touch $prompt_root/vcs_prompt.txt
+  if git rev-parse --is-inside-work-tree &> /dev/null; then
+    prompt_root=~/.config/.prompt/$(basename $(git rev-parse --show-toplevel))
+    if [ ! -d $prompt_root ]; then
+      mkdir -p $prompt_root
+    fi
+    if ! [ -f $prompt_root/vcs_prompt.txt ]; then
+      touch $prompt_root/vcs_prompt.txt
+    fi
   fi
 
-  if ! echo "$PWD" | grep -oh "$HOME" &> /dev/null || [[ ! "$PWD" = "$HOME" && "$(git rev-parse --show-toplevel)" = "$HOME" ]]; then
+  if ! git rev-parse --is-inside-work-tree &> /dev/null; then
+  # if ! echo "$PWD" | grep -oh "$HOME" &> /dev/null || [[ ! "$PWD" = "$HOME" && "$(git rev-parse --show-toplevel)" = "$HOME" ]]; then
     PROMPT="%{$fg[green]%}%(4~|.../%8~|%~)"$'\n'"%{$fg[default]%}%# "
   elif checkgitenv; then
     PROMPT="$(cat $prompt_root/vcs_prompt.txt) %{$fg[green]%}%(4~|.../%8~|%~)"$'\n'"%{$fg[default]%}%# "
