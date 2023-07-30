@@ -22,7 +22,11 @@ set mouse=a " Enables mouse mode
 set hidden | au BufReadPost *.kt setlocal filetype=kotlin " Support Kotlin
 hi Normal ctermfg=LightGrey | " Saving my precious eyeballs
 set rtp+=/opt/homebrew/opt/fzf | map <C-p> :FZF<CR> | " Enable FZF
+let &t_SI = "\e[6 q" | let &t_EI = "\e[2 q" | set ttimeoutlen=1 " Setting the cursor correctly
+silent !echo -ne "\e[2 q"
 nnoremap <C-i> <C-w> <C-P> | " Buffer switching using tab key
+let mapleader = ' '
+nnoremap <leader>fo :browse oldfiles<CR>'
 call system('[[ ! -f ~/.vim/rc.vim ]] && mkdir -p .vim && touch ~/.vim/rc.vim') | source ~/.vim/rc.vim " Load config-specific file
 runtime ftplugin/man.vim
 
