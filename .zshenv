@@ -106,6 +106,9 @@ function zle-keymap-select {
   fi
 }
 zle -N zle-keymap-select
+precmd() {
+   echo -ne '\e[6 q'
+}
 preexec() {
    echo -ne '\e[6 q'
 }
