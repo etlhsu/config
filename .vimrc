@@ -11,13 +11,10 @@ set t_Co=256 | syntax on | colorscheme slate | hi Normal ctermfg=LightGrey | " T
 set ttm=1 | let &t_SI = "\e[6 q" | let &t_EI = "\e[2 q" | silent "!echo -ne "\e[2 q"" | " Correct cursor
 set hidden | au BufReadPost *.kt setlocal filetype=kotlin " Support Kotlin
 set rtp+=/opt/homebrew/opt/fzf | map <C-p> :Files<CR> | " Enable FZF
-let $FZF_DEFAULT_OPTS="--bind ctrl-u:preview-half-page-up,ctrl-d:preview-half-page-down"
 let g:netrw_browse_split = 4 | let g:netrw_winsize = 16 | let g:netrw_banner = 0 " Set netrw options
 let g:netrw_list_hide = '^\./$,^\.\./$,.DS_Store' | let g:netrw_hide = 1 " Hide annoying files
 if filereadable("~/.vim/rc.vim") | source ~/.vim/rc.vim | endif " Load config-specific file
 command! Ter execute "bo ter" | execute "res 15" | command! Vres execute "vert res"| " Simple remaps
 let mapleader = ' ' | noremap <leader>fo :browse oldfiles<CR>| " Easily browse oldfiles
-map <C-f> :<C-f>| imap <C-f> <ESC>:<C-f> | map <C-k> <C-w>| imap <C-k> <C-w>| tmap <C-k> <C-w>| " Remaps
-map <leader>fo :History<CR>| map <leader>gwo :GFiles<CR>| map <leader>fa :Rg<CR>| map <leader>fb :Buffers<CR>| map <leader>fh :Helptags<CR>
 command! Soi source ~/.vimrc
 ab uenv #!/usr/bin/env
