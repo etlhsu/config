@@ -17,6 +17,8 @@
 !docs/
 !docs/*
 docs/.*
+!.ssh/
+!.ssh/config
 !.local/
 !.local/share/
 !.local/share/nvim/
@@ -25,5 +27,10 @@ docs/.*
 !.local/share/nvim/site/pack/plugins/
 !.local/share/nvim/site/pack/plugins/start/
 !.local/share/nvim/site/pack/plugins/start/*
+!.vim/
+!.vim/pack/
+!.vim/pack/plugins/
+!.vim/pack/plugins/start/
+!.vim/pack/plugins/start/*
 
 **/.DS_Store

@@ -1,7 +1,6 @@
 #!/bin/zsh
 
-pkgs=('fzf' 'entr' 'ktlint' 'neofetch' 'node' 'neovim' 'ranger' 'ripgrep' 'tailscale' 'tmux')
-pkgs+=('bash-language-server' 'kotlin-language-server' 'lua-language-server')
+pkgs=('bat' 'fzf' 'entr' 'ktlint' 'neofetch' 'node' 'ranger' 'ripgrep' 'tailscale' 'tmux')
 if [ "$(uname)" = "Darwin" ]; then
   if ! command -v brew &>/dev/null; then
     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
@@ -14,4 +13,4 @@ fi
 npm install -g @astrojs/language-server
 
 git submodule init
-git submodule update --remote
+git submodule update

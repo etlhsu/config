@@ -121,8 +121,7 @@ local hasLspConfig,lspconfig = pcall(require,'lspconfig')
 local hasCmp,cmp = pcall(require,'cmp')
 
 if hasTelescope then
-  local builtin = require('telescope.builtin')
-  vim.keymap.set('n', '<C-p>', builtin.find_files)
+  local builtin = require('telescope.builtin') vim.keymap.set('n', '<C-p>', builtin.find_files)
   vim.keymap.set('n', '<leader>ff', function() builtin.find_files({find_command = {'rg', '--files', '--no-ignore-vcs',}}) end)
   vim.keymap.set('n', '<leader>fg', builtin.live_grep)
   vim.keymap.set('n', '<leader>fb', builtin.buffers)

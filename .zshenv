@@ -25,6 +25,7 @@ bindkey '^E' spin-key
 
 export FZF_DEFAULT_COMMAND='rg --files --no-ignore-vcs --hidden'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+export FZF__DEFAULT_OPTS=''
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 path+="$HOME/.config/bin"
 path+="$HOME/personal/bin"
@@ -110,5 +111,5 @@ precmd() {
    echo -ne '\e[6 q'
 }
 preexec() {
-   echo -ne '\e[6 q'
+   echo -ne '\e[2 q'
 }

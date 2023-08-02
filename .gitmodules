@@ -38,3 +38,10 @@
 	path = .local/share/nvim/site/pack/plugins/start/kotlin-vim
 	url = https://github.com/udalov/kotlin-vim.git
 	branch = master
+[submodule ".vim/pack/plugins/start/kotlin-vim"]
+	path = .vim/pack/plugins/start/kotlin-vim
+	url = https://github.com/udalov/kotlin-vim.git
+[submodule ".vim/pack/plugins/start/fzf.vim"]
+	path = .vim/pack/plugins/start/fzf.vim
+	url = https://github.com/junegunn/fzf.vim.git
+	branch = master

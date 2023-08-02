@@ -1,93 +1,23 @@
-set wmnu wop=pum "Enable the wild menu and uses popup
-set wig=*.o,*~,*.pyc,*/.git/*,*/.hg/*,*/.svn/*,*/.DS_Store " Ignore compiled files in wild
-set so=20 " Set 7 lines to the cursor - when moving vertically using j/k
-set hls is " Highlight search results and search incrementally
-set magic scs " For regular expressions turn magic on and enable smartcase searching
-set nu cc=100 wrap sm " Enable line numbers, line limit, line wrapping and matching braces
-set et sta ai si ts=2 shiftwidth=2 " Use 4 saces instead of tabs and auto/smart indents
-set backspace=indent,eol,start nocp " Make escape and backspace work, disable vi compat
-set sb " Open windows from below
-set ar | au FocusGained,BufEnter * checktime " Enable auto-read
-set awa | autocmd TextChanged * silent! write | call system('spin change')  " Enable auto-write
-set undofile udir=~/.vim/undo/ " Stores undos
-set ls=2 sc " Always show status line and show command being typed in
-set nobk nowb noswf lz " Disable backups and enable lazy redraw (for perf)
-let g:netrw_browse_split = 4 "Sticky window opens selected file in previous split
-let g:netrw_winsize = 16 | let g:netrw_banner = 0 " Set netrw window size and hide the banner
-let g:netrw_list_hide = '^\./$,^\.\./$,.DS_Store' | let g:netrw_hide = 1 " Hide annoying files
-syntax on | set t_Co=256 | colorscheme slate " Enable synatx, use 256 colors and slate theme
-set path+=** " Enables recursive searching
-set shm+=c shm+=l shm-=S completeopt=menuone,popup
-set mouse=a " Enables mouse mode
+set wmnu wop=pum wig=*.o,*~,*.pyc,*/.git/*,*/.hg/*,*/.svn/*,*/.DS_Store/*,*/.gradle/* " Enable wild menu
+set backspace=indent,eol,start nocp " Make escape, backspace work, disable vi compat
+set cc=100 hls is magic scs so=20 sb mouse=a " Better searching, line boundary, mouse, windows from below
+set nu wrap sm ls=2 sc et sta ai si ts=2 shiftwidth=2 " Line, statusline, tab UI improvements
+set ar awa | au FocusGained,BufEnter * if getcmdwintype() == '' | checktime | endif " Auto-read
+au TextChanged * if getcmdwintype() == '' | silent! write | endif " Auto-write
+au filetype netrw map <buffer> h -^| map <buffer> l <CR>| map <buffer> . gh| " Navigate netrw like ranger
+set undofile udir=~/.vim/undo/ nobk nowb noswf lz tf " Store undos without backups and lazy redraw
+set path+=** shm+=c shm+=l shm-=S completeopt=menuone,popup " Better pop-ups
+set t_Co=256 | syntax on | colorscheme slate | hi Normal ctermfg=LightGrey | " Theming stuff
+set ttm=1 | let &t_SI = "\e[6 q" | let &t_EI = "\e[2 q" | silent "!echo -ne "\e[2 q"" | " Correct cursor
 set hidden | au BufReadPost *.kt setlocal filetype=kotlin " Support Kotlin
-hi Normal ctermfg=LightGrey | " Saving my precious eyeballs
-set rtp+=/opt/homebrew/opt/fzf | map <C-p> :FZF<CR> | " Enable FZF
-let &t_SI = "\e[6 q" | let &t_EI = "\e[2 q" | set ttimeoutlen=1 " Setting the cursor correctly
-silent !echo -ne "\e[2 q"
-nnoremap <C-i> <C-w> <C-P> | " Buffer switching using tab key
-let mapleader = ' '
-nnoremap <leader>fo :browse oldfiles<CR>'
-call system('[[ ! -f ~/.vim/rc.vim ]] && mkdir -p .vim && touch ~/.vim/rc.vim') | source ~/.vim/rc.vim " Load config-specific file
-runtime ftplugin/man.vim
-
-map <C-E> :call system('spin refresh')<CR> | " Force spin
-
-command! Ter execute "ter" | execute "res 15"
-
-command! -nargs=1 Tip call ShowTip(<q-args>)
-command! -nargs=1 T call ShowTip(<q-args>)
-function ShowTip(tipname)
-  let buffers = getbufinfo()
-  let i = 0
-  while i < len(buffers)
-    let pathregex = expand("$HOME") . '/.config/tip/.*.md'
-    let bufname = buffers[i]["name"] 
-    let hidden = buffers[i]["hidden"]
-    if bufname =~ pathregex && hidden == 0
-      let currBufName = bufname
-      let currBufNr = buffers[i]["bufnr"]
-      break
-    endif
-    let i += 1
-  endwhile
-  let editname = expand("$HOME") . '/.config/tip/' . a:tipname . '.md'
-  let hiddenname = expand("$HOME") . '/.config/tip/.' . a:tipname . '.md'
-  if filereadable(hiddenname) | let editname = hiddenname | endif
-
-  if exists("currBufName")
-    call win_gotoid(win_findbuf(currBufNr)[0])
-    execute "e " . editname
-  else 
-    execute "split " . editname
-    execute "set nonumber"
-    execute "highlight EndOfBuffer ctermfg=bg guifg=bg"
-  endif
-endfunction
-
-command! -nargs=1 Pl call PrintLine('o', <q-args>)
-command! -nargs=1 Pli call PrintLine('i', <q-args>)
-command! -nargs=+ Plx call PrintLine(<f-args>)
-function PrintLine(cmd,content)
-  let extension = expand("%:e")
-  if g:plc > -1
-    let header = "(" . g:plc . ") " . g:baseheader
-    let g:plc = g:plc + 1
-  else
-    let header = g:baseheader
-  endif
-
-  if extension == "kt"
-    let statement = "println(\"" . header . a:content . ": ${" . a:content . "}\")"
-  endif
-  if extension == "java"
-    let statement = "System.out.println(\"" . header . a:content . ":\" + (" . a:content . "));"
-  endif
-  execute "normal! " . a:cmd . statement . "\<Esc>"
-endfunction
-
-let g:baseheader="Ethan: "
-command! -nargs=1 Plh execute "let g:baseheader=\"" . <q-args> . "\""
-let g:plc=-1
-command! -nargs=1 Plc execute "let g:plc=" . <q-args>
-
+set rtp+=/opt/homebrew/opt/fzf | map <C-p> :Files<CR> | " Enable FZF
+let $FZF_DEFAULT_OPTS="--bind ctrl-u:preview-half-page-up,ctrl-d:preview-half-page-down"
+let g:netrw_browse_split = 4 | let g:netrw_winsize = 16 | let g:netrw_banner = 0 " Set netrw options
+let g:netrw_list_hide = '^\./$,^\.\./$,.DS_Store' | let g:netrw_hide = 1 " Hide annoying files
+if filereadable("~/.vim/rc.vim") | source ~/.vim/rc.vim | endif " Load config-specific file
+command! Ter execute "bo ter" | execute "res 15" | command! Vres execute "vert res"| " Simple remaps
+let mapleader = ' ' | noremap <leader>fo :browse oldfiles<CR>| " Easily browse oldfiles
+map <C-f> :<C-f>| imap <C-f> <ESC>:<C-f> | map <C-k> <C-w>| imap <C-k> <C-w>| tmap <C-k> <C-w>| " Remaps
+map <leader>fo :History<CR>| map <leader>gwo :GFiles<CR>| map <leader>fa :Rg<CR>| map <leader>fb :Buffers<CR>| map <leader>fh :Helptags<CR>
+command! Soi source ~/.vimrc
 ab uenv #!/usr/bin/env
