@@ -22,3 +22,12 @@ precmd() {
   minprompt
   echo -ne '\e[6 q' # Prints the beam character before typing
 }
+
+## Editor Setup
+Neovim is my preferred editor due to its flexibility and ability for me to spend endless hours
+ricing my configuration.
+
+Some themes that I like:
+- Slate (default) - Overall the best contrasting, most sensible theme
+- Habamax - A more calm editing experience
+- Peachpuff - The color scheme with the most personality

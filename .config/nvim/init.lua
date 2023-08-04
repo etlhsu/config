@@ -10,7 +10,6 @@ vim.g.netrw_browse_split = 4; vim.g.netrw_winsize = 20; vim.g.netrw_banner = 0; 
 vim.keymap.set({ 'n', 'v', 's', 'o', 'i', 'c' }, '<C-k>', '<C-w>')
 vim.keymap.set('t', '<C-k>', '<C-\\><C-n><C-w>'); vim.keymap.set('t', '<C-w>', '<C-\\><C-n><C-w>')
 vim.keymap.set({ 'n', 'v', 'o' }, '<C-f>', ':<C-f>'); vim.keymap.set('i', '<C-f>', '<ESC>:<C-f>')
-
 vim.cmd.colorscheme('slate')
 vim.cmd([[ highlight Normal ctermfg=LightGrey | ab uenv #!/usr/bin/env ]])
 local function EditBuf(cmd)
