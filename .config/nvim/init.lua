@@ -11,7 +11,8 @@ vim.keymap.set({ 'n', 'v', 's', 'o', 'i', 'c' }, '<C-k>', '<C-w>')
 vim.keymap.set('t', '<C-k>', '<C-\\><C-n><C-w>'); vim.keymap.set('t', '<C-w>', '<C-\\><C-n><C-w>')
 vim.keymap.set({ 'n', 'v', 'o' }, '<C-f>', ':<C-f>'); vim.keymap.set('i', '<C-f>', '<ESC>:<C-f>')
 vim.cmd.colorscheme('slate')
-vim.cmd([[ highlight Normal ctermfg=LightGrey | ab uenv #!/usr/bin/env ]])
+vim.cmd([[ hi Normal ctermfg=LightGrey | hi Structure ctermfg=42 gui=none cterm=none | hi Type gui=none cterm=none | hi Structure gui=none cterm=none | hi Statement gui=none cterm=none ]])
+vim.cmd([[ab uenv #!/usr/bin/env ]])
 local function EditBuf(cmd)
   if vim.fn.getcmdwintype() == "" and vim.api.nvim_win_get_config(0).relative == "" then vim.cmd(cmd) end
 end

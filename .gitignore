@@ -13,6 +13,7 @@
 !.config/nvim/*
 !.config/nvim/pack/plugins/
 !.config/nvim/pack/plugins/start/
+!.config/nvim/pack/plugins/start/*
 !.rgignore
 !.tmux.conf
 !.editorconfig
