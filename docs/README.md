@@ -7,8 +7,8 @@ to pickup submodules when cloning:
 ```shell
 cd ~ # Be in your user folder
 git init # Create an empty git repo
-git remote add origin https://github.com/ethanhsuhsu/config.git # Add remote repo
-git pull origin main -f # Pull from remote repo (may need to remove conflicting files and try again)
+git remote add origin https://github.com/etlhsu/config.git # Add remote repo
+git pull origin main -f # Pull from remote repo
 zsh # Refresh terminal
 init # Download packages
 ```
@@ -20,4 +20,5 @@ Here are some options that are .zshrc specific:
 # Adds my minimal command prompt to your terminal
 precmd() {
   minprompt
+  echo -ne '\e[6 q' # Prints the beam character before typing
 }
