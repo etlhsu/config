@@ -38,3 +38,7 @@
 	path = .config/nvim/telescope.nvim
 	url = https://github.com/nvim-telescope/telescope.nvim.git
 	branch = master
+[submodule ".config/nvim/pack/plugins/start/vim-code-dark"]
+	path = .config/nvim/pack/plugins/start/vim-code-dark
+	url = https://github.com/tomasiser/vim-code-dark.git
+	branch = master

@@ -28,6 +28,7 @@ Neovim is my preferred editor due to its flexibility and ability for me to spend
 ricing my configuration.
 
 Some themes that I like:
-- Slate (default) - Overall the best contrasting, most sensible theme
-- Habamax - A more calm editing experience
+- [Code Dark](https://github.com/tomasiser/vim-code-dark) (default) - The most minimal, portable, and readable theme
+- Slate - Has great contrast between colors and stylish accents
+- Habamax - Provies the most calming editing experience
 - Peachpuff - The color scheme with the most personality
