@@ -5,14 +5,15 @@ vim.opt.wrap = true; vim.opt.tabstop = 2; vim.opt.shiftwidth = 2; vim.opt.smarti
 vim.opt.splitbelow = true
 vim.opt.autowriteall = true; vim.opt.undofile = true; vim.opt.swapfile = false; vim.opt.backup = false; vim.opt.writebackup = false
 vim.g.mapleader = ' '
-vim.g.netrw_browse_split = 4; vim.g.netrw_winsize = 15; vim.g.netrw_banner = 0; vim.g.netrw_hide = 1; vim.g.netrw_list_hide =
+vim.g.netrw_browse_split = 4; vim.g.netrw_winsize = 20; vim.g.netrw_banner = 0; vim.g.netrw_hide = 1; vim.g.netrw_list_hide =
 '^./$,^../$,.DS_Store';
 vim.keymap.set({ 'n', 'v', 's', 'o', 'i', 'c' }, '<C-k>', '<C-w>')
 vim.keymap.set('t', '<C-k>', '<C-\\><C-n><C-w>'); vim.keymap.set('t', '<C-w>', '<C-\\><C-n><C-w>')
 vim.keymap.set({ 'n', 'v', 'o' }, '<C-f>', ':<C-f>'); vim.keymap.set('i', '<C-f>', '<ESC>:<C-f>')
 vim.cmd.colorscheme('codedark')
-vim.cmd([[ hi Normal ctermfg=LightGrey | hi Type ctermfg=43 | hi Structure ctermfg=43 ]])
+vim.cmd([[ hi Normal ctermfg=LightGrey | hi Type ctermfg=43 | hi Structure ctermfg=43 | hi MatchParen ctermbg=244]])
 vim.cmd([[ab uenv #!/usr/bin/env ]])
+vim.cmd([[ au filetype netrw map <buffer> h -^| map <buffer> l <CR>| map <buffer> . gh| ]])-- Navigate netrw like ranger
 local function EditBuf(cmd)
   if vim.fn.getcmdwintype() == "" and vim.api.nvim_win_get_config(0).relative == "" then vim.cmd(cmd) end
 end
