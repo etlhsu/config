@@ -11,7 +11,7 @@ vim.keymap.set({ 'n', 'v', 's', 'o', 'i', 'c' }, '<C-k>', '<C-w>')
 vim.keymap.set('t', '<C-k>', '<C-\\><C-n><C-w>'); vim.keymap.set('t', '<C-w>', '<C-\\><C-n><C-w>')
 vim.keymap.set({ 'n', 'v', 'o' }, '<C-f>', ':<C-f>'); vim.keymap.set('i', '<C-f>', '<ESC>:<C-f>')
 vim.cmd.colorscheme('codedark')
-vim.cmd([[ hi Normal ctermfg=LightGrey | hi Type ctermfg=43 | hi Structure ctermfg=43 | hi MatchParen ctermbg=244]])
+vim.cmd([[ hi Normal ctermfg=LightGrey | hi Type ctermfg=43 | hi Structure ctermfg=43 | hi MatchParen ctermbg=244 | hi @text cterm=none ctermfg=LightGrey]])
 vim.cmd([[ab uenv #!/usr/bin/env ]])
 vim.cmd([[ au filetype netrw map <buffer> h -^| map <buffer> l <CR>| map <buffer> . gh| ]])-- Navigate netrw like ranger
 local function EditBuf(cmd)
