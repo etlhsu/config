@@ -1,6 +1,6 @@
 #!/bin/zsh
 
-pkgs=('fzf' 'entr' 'ktlint' 'neofetch' 'neovim' 'node' 'ranger' 'ripgrep' 'tailscale' 'tmux')
+pkgs=('bat' 'fzf' 'entr' 'ktlint' 'neofetch' 'neovim' 'node' 'ranger' 'ripgrep' 'tailscale' 'tmux')
 if [ "$(uname)" = "Darwin" ]; then
   if ! command -v brew &>/dev/null; then
     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"

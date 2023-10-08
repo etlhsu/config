@@ -37,4 +37,4 @@ else
   }
 fi
 
-getinput | entr -rs "$cmd"
+getinput | entr -rs $cmd

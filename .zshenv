@@ -5,8 +5,9 @@ export cn="$HOME/.config/nvim"
 export cs="$HOME/.config/sample"
 
 export pb="$HOME/personal/bin"
-export ps="$HOME/personal/space"
 export pp="$HOME/personal/pile"
+export pk="$HOME/personal/kits"
+export ps="$HOME/personal/space"
 
 # Configuration
 autoload -U colors && colors
@@ -112,4 +113,15 @@ precmd() {
 }
 preexec() {
    echo -ne '\e[2 q'
+}
+
+alias sn="spin none"
+alias soe="source ~/.zshenv"
+alias sor="source ~/.zshrc"
+
+vx() {
+  commits="$(git xl | grep -Eo '\*.+' | cut -d ' ' -f2-)"
+  echo $commits
+  rev="$(echo $commits | fzf --layout=reverse-list | cut -d ' ' -f1)"
+  echo "$rev"
 }
