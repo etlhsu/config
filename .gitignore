@@ -13,6 +13,8 @@
 !.config/bin/*
 !.config/kitty/
 !.config/kitty/*
+!.config/ranger/
+!.config/ranger/*
 !.config/nvim/
 !.config/nvim/*
 !.config/nvim/pack/plugins/

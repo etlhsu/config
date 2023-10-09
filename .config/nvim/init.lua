@@ -178,10 +178,11 @@ if hasCatppuccin then
 catppuccin.setup({
    custom_highlights = function(colors)
         return {
-        LineNr = { fg = colors.surface2 },
+        LineNr = { fg = colors.overlay0 },
         MatchParen = { bg = colors.mauve },
         StatusLine = { fg = colors.mauve, bg = colors.surface1 },
         StatusLineNC = { fg = colors.mauve, bg = colors.surface0 },
+        WinSeparator = { fg = colors.surface1 },
       }
       end,
     integrations = {
@@ -264,12 +265,7 @@ if hasTelescope then
   end)
 
   vim.keymap.set('n', '<leader>df', function()
-    vim.schedule(function ()
     builtin.find_files({ search_dirs = { vim.fn.expand('%:h') } })
-    end)
-    vim.schedule(function ()
-    builtin.find_files({ search_dirs = { vim.fn.expand('%:h') } })
-    end)
   end)
   vim.keymap.set('n', '<leader>ds', function()
     builtin.live_grep({ search_dirs = { vim.fn.expand('%:h') } })

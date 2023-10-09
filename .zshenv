@@ -14,6 +14,8 @@ autoload -U colors && colors
 
 set -o vi
 setopt autocd
+setopt NO_HUP
+setopt AUTO_CONTINUE
 autoload -Uz predict-on
 zle -N predict-on
 bindkey '^N' end-of-line
