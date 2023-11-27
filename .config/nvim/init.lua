@@ -2,12 +2,11 @@ vim.opt.wildignore = { '*.git/*', '*/.hg/*', '*.DS_Store' }; vim.opt.completeopt
   'noinsert' }
 vim.opt.scrolloff = 20; vim.opt.number = true; vim.opt.colorcolumn = '100'
 vim.opt.wrap = true; vim.opt.tabstop = 2; vim.opt.shiftwidth = 2; vim.opt.smartindent = true; vim.opt.expandtab = true
-vim.o.termguicolors = true
 vim.opt.splitbelow = true
 vim.opt.autowriteall = true; vim.opt.undofile = true; vim.opt.swapfile = false; vim.opt.backup = false; vim.opt.writebackup = false
 vim.opt.gdefault = true;
 vim.opt.runtimepath:append(',~/.config/nvim/pack/plugins/start/*/*')
-vim.opt.shada = "!,'200,f1,<50,s10,h" -- Allowing for 200 oldfiles
+vim.opt.shada = "!,'250,f1,<50,s10,h" -- Allowing for 250 oldfiles
 vim.g.mapleader = ' '
 vim.g.netrw_winsize = 20; vim.g.netrw_banner = 0; vim.g.netrw_hide = 1; vim.g.netrw_list_hide =
 '^./$,^../$,.DS_Store';
@@ -91,7 +90,7 @@ end, {
     handle:close()
     local completes = {}
     for result in string.gmatch(results, "[^%s]+") do
-      if input ~= ' ' and result:find('^' .. start_input) ~= null then
+      if input ~= ' ' and result:find('^' .. start_input) ~= nil then
         completes[#completes + 1] = dir .. result
       end
     end
@@ -167,8 +166,7 @@ if hasColorizer then
     user_default_options = {
       RGB = true, -- #RGB hex codes
       RRGGBB = true, -- #RRGGBB hex codes
-      names = true, -- "Name" codes like Blue or blue
-      names = false,
+      names = false, -- "Name" codes like Blue or blue,
       tailwind = true,
     }
   }
@@ -190,8 +188,12 @@ catppuccin.setup({
       telescope = true,
     }
   })
-  if(vim.g.colors_name ~= 'catppuccin-mocha') then
+
+  if((os.getenv('COLORTERM') or ''):match('truecolor') ~= nil and vim.g.colors_name ~= 'catppuccin-mocha') then
+    vim.o.termguicolors = true
     vim.cmd.colorscheme('catppuccin-mocha')
+  else
+    vim.cmd.colorscheme('slate')
   end
 end
 
