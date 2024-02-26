@@ -33,6 +33,7 @@ export FZF__DEFAULT_OPTS=''
 path+="$HOME/.config/bin"
 path+="$HOME/personal/bin"
 export PATH
+export ANDROID_EMULATOR_WAIT_TIME_BEFORE_KILL=60
 
 # Utilities
 mkcd() {
