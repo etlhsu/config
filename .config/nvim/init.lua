@@ -1,41 +1,31 @@
-vim.opt.wildignore = { '*.git/*', '*/.hg/*', '*.DS_Store' }; vim.opt.completeopt = { 'menu', 'menuone', 'noselect',
-  'noinsert' }
-vim.opt.scrolloff = 20; vim.opt.number = true; vim.opt.colorcolumn = '100'
-vim.opt.wrap = true; vim.opt.tabstop = 2; vim.opt.shiftwidth = 2; vim.opt.smartindent = true; vim.opt.expandtab = true
-vim.opt.splitbelow = true
-vim.opt.autowriteall = true; vim.opt.undofile = true; vim.opt.swapfile = false; vim.opt.backup = false; vim.opt.writebackup = false
-vim.opt.gdefault = true;
-vim.opt.runtimepath:append(',~/.config/nvim/pack/plugins/start/*/*')
-vim.opt.shada = "!,'250,f1,<50,s10,h" -- Allowing for 250 oldfiles
+--Starting Options  {{{
+vim.cmd.colorscheme('habamax')
 vim.g.mapleader = ' '
-vim.g.netrw_winsize = 20; vim.g.netrw_banner = 0; vim.g.netrw_hide = 1; vim.g.netrw_list_hide =
-'^./$,^../$,.DS_Store';
-vim.keymap.set({ 'n', 'v', 's', 'o', 'i', 'c' }, '<C-k>', '<C-w>')
-vim.keymap.set('t', '<C-k>', '<C-\\><C-n><C-w>'); vim.keymap.set('t', '<C-w>', '<C-\\><C-n><C-w>')
-vim.keymap.set({ 'n', 'v', 'o' }, '<C-f>', ':<C-f>'); vim.keymap.set('i', '<C-f>', '<ESC>:<C-f>')
-vim.keymap.set({ 'n', 'v', 'o' }, '<leader>gi', '?^import.*\\n.*\\n<CR>:noh<CR>')
-vim.keymap.set({ 'n', 'v', 'o' }, '<leader>gp', '`[\' . strpart(getregtype(), 0, 1) . \'`]')
-vim.keymap.set({ 'n', 'v', 'o' }, '<leader>gr', function()
-  vim.api.nvim_feedkeys(':%s/' .. vim.fn.expand('<cword>') .. '/', 'n', {})
-end)
-vim.keymap.set({ 'n', 'v', 'o' }, '<leader>gR', function()
-  vim.api.nvim_feedkeys(':%s/' .. vim.fn.expand('<cWORD>') .. '/', 'n', {})
-end)
-vim.keymap.set({ 'n', 'v', 'o' }, '<C-e>', function()
-  vim.fn.system { vim.env.HOME .. '/.config/bin/spin', 'refresh' }
-  print("Spining...")
-end)
-vim.keymap.set({ 'n', 'v', 'o' }, '<leader>gf', function()
-  local symbol = vim.fn.expand('<cword>')
-  for k, file in pairs(vim.v.oldfiles) do
-    if file:find(symbol) ~= nil then
-      -- open file
-      vim.cmd('e ' .. file)
-      return
-    end
-  end
-  print("No associated file found for: " .. symbol)
-end)
+vim.g.netrw_banner = 0
+vim.g.netrw_hide = 1
+vim.g.netrw_list_hide = '^./$,^../$,.DS_Store';
+vim.g.netrw_winsize = 20
+vim.opt.autowriteall = true
+vim.opt.backup = false
+vim.opt.colorcolumn = '100'
+vim.opt.completeopt = { 'menu', 'menuone', 'noselect', 'noinsert' }
+vim.opt.expandtab = true
+vim.opt.foldmethod = 'marker'
+vim.opt.gdefault = true
+vim.opt.number = true
+vim.opt.scrolloff = 20
+vim.opt.shada = "'300,h" -- Allow for 300 oldfiles and prevent highlighting the saved search
+vim.opt.shiftwidth = 2
+vim.opt.smartindent = true
+vim.opt.splitbelow = true
+vim.opt.swapfile = false
+vim.opt.tabstop = 2
+vim.opt.undofile = true
+vim.opt.wildignore = { '*.git/*', '*/.hg/*', '*.DS_Store' }
+vim.opt.wrap = true
+vim.opt.writebackup = false
+
+-- Abbreviations (triggered by entering a sequence and <space> in insert mode)
 vim.cmd([[
   func! Eatchar()
      let c = nr2char(getchar(0))
@@ -48,23 +38,62 @@ vim.cmd([[
   Eia moci import org.mockito.kotlin.
   Eia comi import androidx.compose.
 ]])
-vim.cmd([[ au filetype netrw map <buffer> h -^| map <buffer> l <CR>| map <buffer> . gh| ]]) -- Navigate netrw like ranger
-vim.cmd([[ au filetype netrw map <buffer> L <CR><C-R>=vim.g.netrw_preview| ]])              -- Navigate netrw like ranger
+-- Navigate netrw like ranger
+vim.cmd([[ au filetype netrw map <buffer> h -^| map <buffer> l <CR>| map <buffer> . gh| ]])
+vim.cmd([[ au filetype netrw map <buffer> L <CR><C-R>=vim.g.netrw_preview| ]])
+
 local function EditBuf(cmd)
   if vim.fn.getcmdwintype() == "" and vim.api.nvim_win_get_config(0).relative == "" then vim.cmd(cmd) end
 end
+-- Automatically read a file when re-entered
 vim.api.nvim_create_autocmd({ 'FocusGained', 'BufEnter' },
   { pattern = '*', callback = function() EditBuf([[checktime]]) end })
+-- Automatically write a file upon a change in insert mode or normal mode
 vim.api.nvim_create_autocmd({ 'InsertLeavePre', 'TextChanged' },
   { pattern = '*', callback = function() EditBuf([[silent! write]]) end })
-vim.api.nvim_create_user_command('Ter',
-  function() vim.cmd([[bot new | res 15 | set wfh | set nonu | startinsert | ter ]]) end, {})
+-- Configure new terminals with no line numbers and begin them in insert mode
+vim.api.nvim_create_autocmd({'TermOpen'},
+  { pattern = '*', callback = function() vim.cmd([[setlocal nonumber signcolumn=no" | startinsert]]) end })
+-- }}}
+
+-- Keymaps {{{
+-- Begin escaping terminal insert mode using Ctrl-W
+vim.keymap.set('t', '<C-w>', '<C-\\><C-n><C-w>')
+-- Go to import section in Java/Kotlin
+vim.keymap.set('n', '<leader>gi', '?^import.*\\n.*\\n<CR>:noh<CR>')
+vim.keymap.set('n', '<leader>gr', function()
+-- Replace current word
+  vim.api.nvim_feedkeys(':%s/' .. vim.fn.expand('<cword>') .. '/', 'n', {})
+end)
+-- Replace current WORD
+vim.keymap.set('n', '<leader>gR', function()
+  vim.api.nvim_feedkeys(':%s/' .. vim.fn.expand('<cWORD>') .. '/', 'n', {})
+end)
+-- Go to file (searches oldfiles)
+vim.keymap.set({ 'n', 'v', 'o' }, '<leader>gf', function()
+  local symbol = vim.fn.expand('<cword>')
+  for k, file in pairs(vim.v.oldfiles) do
+    if file:find(symbol) ~= nil then
+      -- open file
+      vim.cmd('e ' .. file)
+      return
+    end
+  end
+  print("No associated file found for: " .. symbol)
+end)
+-- Command spinning using Ctrl+e
+vim.keymap.set('n', '<C-e>', function()
+  vim.fn.system { vim.env.HOME .. '/.config/bin/spin', 'refresh' }
+  print("Spining...")
+end)
+-- }}}
+
+-- Commands {{{
+
+-- Reload init.lua quickly
 vim.api.nvim_create_user_command('Soi', function() vim.cmd([[source ~/.config/nvim/init.lua]]) end, {})
-vim.api.nvim_create_user_command('Note', function() vim.cmd([[tabnew | e ~/personal/note.md]]) end, {})
-vim.api.nvim_create_user_command('Vex', function()
-  vim.g.netrw_chgwin = vim.fn.bufwinnr(vim.fn.bufnr()) + 1
-  vim.cmd([[Vexplore]])
-end, {})
+
+-- Create a file in the directory of the current file
 vim.api.nvim_create_user_command('E', function(opts)
   local file = opts.args
   if file[0] ~= '/' then
@@ -98,6 +127,8 @@ end, {
   end,
   nargs = 1
 })
+
+-- Rename/move the current file to a new location
 vim.api.nvim_create_user_command('Mv', function(opts)
   local file = opts.args
   local oldfile = vim.fn.expand('%')
@@ -111,13 +142,14 @@ vim.api.nvim_create_user_command('Mv', function(opts)
   vim.api.nvim_buf_delete(vim.fn.bufnr(old_bufname), {})
 end, { complete = 'file', nargs = 1 })
 
+-- Apply a kit in the current directory
 vim.api.nvim_create_user_command('Kit', function(opts)
   if vim.api.nvim_get_option_value('filetype', {}) ~= 'netrw' then
     print("Kits can only be made inside netrw explorers")
     return
   end
   local kit = vim.env.HOME .. '/personal/kits/' .. opts.args
-  path = vim.fn.fnamemodify(vim.b.netrw_curdir, ':p')
+  local path = vim.fn.fnamemodify(vim.b.netrw_curdir, ':p')
   os.execute('cp -R ' .. kit .. '/* ' .. path)
   vim.cmd [[ e ]]
 end, {
@@ -127,7 +159,7 @@ end, {
     handle:close()
     local completes = {}
     for result in string.gmatch(results, "[^%s]+") do
-      if input ~= ' ' and result:find('^' .. input) ~= null then
+      if input ~= ' ' and result:find('^' .. input) ~= nil then
         completes[#completes + 1] = result
       end
     end
@@ -135,80 +167,19 @@ end, {
   end,
   nargs = 1
 })
+-- }}}
 
-Impored=false
-ImportTable = {}
-vim.keymap.set({ 'n', 'v', 'o' }, '<leader>i', function()
-  if Imported == false then
-    handle=io.popen("cat $shada")
-    local results = handle:read("*a")
-    for line in handle:lines() do
-      --table.insert(ImportTable, 
-    end
-    handle:close()
-  end
-
-end)
-
--- Loading plugins
+-- Telescope {{{
 local hasTelescope, telescope = pcall(require, 'telescope')
-local hasTreesitterConfigs, treesitterConfigs = pcall(require, 'nvim-treesitter.configs')
-local hasLspZero, lspZero = pcall(require, 'lsp-zero')
-local hasLspConfig, lspconfig = pcall(require, 'lspconfig')
-local hasCmp, cmp = pcall(require, 'cmp')
-local hasColorizer, colorizer = pcall(require, 'colorizer')
-local hasCatppuccin, catppuccin = pcall(require, 'catppuccin')
-
-
-if hasColorizer then
-  colorizer.setup {
-      filetypes = { "*" },
-    user_default_options = {
-      RGB = true, -- #RGB hex codes
-      RRGGBB = true, -- #RRGGBB hex codes
-      names = false, -- "Name" codes like Blue or blue,
-      tailwind = true,
-    }
-  }
-end
-
-if hasCatppuccin then
-catppuccin.setup({
-   custom_highlights = function(colors)
-        return {
-        LineNr = { fg = colors.overlay0 },
-        MatchParen = { bg = colors.mauve },
-        StatusLine = { fg = colors.mauve, bg = colors.surface1 },
-        StatusLineNC = { fg = colors.mauve, bg = colors.surface0 },
-        WinSeparator = { fg = colors.surface1 },
-      }
-      end,
-    integrations = {
-      treesitter = true,
-      telescope = true,
-    }
-  })
-
-  if((os.getenv('COLORTERM') or ''):match('truecolor') ~= nil and vim.g.colors_name ~= 'catppuccin-mocha') then
-    vim.o.termguicolors = true
-    vim.cmd.colorscheme('catppuccin-mocha')
-  else
-    vim.cmd.colorscheme('slate')
-  end
-end
-
-filter = vim.tbl_filter
+local filter = vim.tbl_filter
 Path = require("plenary.path")
-get_open_filelist = function(grep_open_files, cwd)
+local function get_open_filelist(grep_open_files, cwd)
   if not grep_open_files then
     return nil
   end
 
   local bufnrs = filter(function(b)
-    if 1 ~= vim.fn.buflisted(b) then
-      return false
-    end
-    return true
+    return 1 == vim.fn.buflisted(b)
   end, vim.api.nvim_list_bufs())
   if not next(bufnrs) then
     return
@@ -231,24 +202,14 @@ end
 if hasTelescope then
   telescope.setup({
     defaults = {
-      layout_config = {
-        vertical = {
-          width = function(_, max_columns)
-            local percentage = 0.5
-            local max = 150
-            return math.min(math.floor(percentage * max_columns), max)
-          end,
-          height = function(_, _, max_lines)
-            local percentage = 0.5
-            local min = 75
-            return math.max(math.floor(percentage * max_lines), min)
-          end
-        }
-      }
+      sorting_strategy = 'ascending',
+      layout_strategy = 'center',
     }
   })
+
   local builtin = require('telescope.builtin')
   local utils = require('telescope.utils')
+
   vim.keymap.set('n', '<C-p>', builtin.find_files)
   vim.keymap.set('n', '<leader>te', builtin.resume)
   vim.keymap.set('n', '<leader>ff',
@@ -278,7 +239,7 @@ if hasTelescope then
   vim.keymap.set('n', '<leader>of', builtin.oldfiles)
   vim.keymap.set('n', '<leader>os', function ()
     local results = {}
-    for k, v in pairs(vim.v.oldfiles) do
+    for _, v in pairs(vim.v.oldfiles) do
       if vim.fn.isdirectory(v) == 0 then
         table.insert(results, v)
       end
@@ -286,25 +247,23 @@ if hasTelescope then
     builtin.live_grep({ search_dirs = results })
   end)
 
-  function get_git_files(rev)
+  local function get_git_files(rev)
     local handle = io.popen("cd " .. vim.loop.cwd() .. "&& git rev-parse --show-toplevel")
     local root = handle:read("*a")
     root = root:sub(1, -2) .. "/"
     handle:close()
 
     local files = {}
-    for index, file in pairs(utils.get_os_command_output({"git", "diff", rev, "--name-only", }, root)) do
+    for _, file in pairs(utils.get_os_command_output({"git", "diff", rev, "--name-only", }, root)) do
       table.insert(files, root .. file)
     end
-    for index, file in pairs(utils.get_os_command_output({"git", "ls-files", "--others", "--exclude-standard", }, root)) do
+    for _, file in pairs(utils.get_os_command_output({"git", "ls-files", "--others", "--exclude-standard", }, root)) do
       table.insert(files, root .. file)
     end
 
-    print("File start")
-    for k, v in pairs(files) do
+    for _, v in pairs(files) do
       print(v)
     end
-    print("File end")
     return files
   end
 
@@ -326,6 +285,10 @@ if hasTelescope then
   )
 
 end
+-- }}}
+
+-- Treesitter and LSP {{{
+local hasTreesitterConfigs, treesitterConfigs = pcall(require, 'nvim-treesitter.configs')
 
 if hasTreesitterConfigs then
   treesitterConfigs.setup {
@@ -333,9 +296,13 @@ if hasTreesitterConfigs then
     highlight = { enable = true }, }
 end
 
+local hasLspZero, lspZero = pcall(require, 'lsp-zero')
+local hasLspConfig, lspconfig = pcall(require, 'lspconfig')
+local hasCmp, cmp = pcall(require, 'cmp')
+
 if hasLspZero and hasLspConfig and hasCmp then
   local lsp = lspZero.preset({})
-  lsp.on_attach(function(client, bufnr)
+  lsp.on_attach(function(_, bufnr)
     lsp.default_keymaps({ buffer = bufnr })
   end)
   lsp.setup_servers({ 'astro', 'bashls', 'kotlin_language_server', 'lua_ls' })
@@ -354,3 +321,4 @@ if hasLspZero and hasLspConfig and hasCmp then
   vim.keymap.set('n', '<leader>lf', vim.lsp.buf.format)
   vim.keymap.set('n', '<leader>la', vim.lsp.buf.code_action)
 end
+-- }}}

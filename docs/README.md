@@ -9,7 +9,7 @@ cd ~ # Be in your user folder
 git init # Create an empty git repo
 git remote add origin https://github.com/etlhsu/config.git # Add remote repo
 git pull origin main -f # Pull from remote repo
-zsh # Refresh terminal
+source ~/.zshenv # Run environment setup
 init # Download packages
 ```
 
@@ -20,15 +20,15 @@ Here are some options that are .zshrc specific:
 # Adds my minimal command prompt to your terminal
 precmd() {
   minprompt
-  echo -ne '\e[6 q' # Prints the beam character before typing
 }
+```
 
 ## Editor Setup
 Neovim is my preferred editor due to its flexibility and ability for me to spend endless hours
-ricing my configuration.
+ricing my configuration. To add a custom configuration file (other than the standard
+`~/.config/nvim/init.lua`), create a `~/.config/nvim/after/plugin/init.lua` which will be
+automatically sourced.
 
 Some themes that I like:
-- [Code Dark](https://github.com/tomasiser/vim-code-dark) (default) - The most minimal, portable, and readable theme
-- Slate - Has great contrast between colors and stylish accents
+- Retrobox - The best overall theme with reasonable colors
 - Habamax - Provies the most calming editing experience
-- Peachpuff - The color scheme with the most personality

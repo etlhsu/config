@@ -94,6 +94,8 @@ minprompt() {
    NEWLINE=$'\n'
    PROMPT="$(cat ${prompt_root}/vcs_prompt.txt) $fg[green]%~${NEWLINE}$fg[default]%# "
   fi
+
+  echo -ne '\e[6 q'
 }
 
 KEYTIMEOUT=5

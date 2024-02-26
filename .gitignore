@@ -7,8 +7,6 @@
 !.gitconfig
 !.profile
 !.config/
-!.config/bat/
-!.config/bat/*
 !.config/bin/
 !.config/bin/*
 !.config/kitty/
