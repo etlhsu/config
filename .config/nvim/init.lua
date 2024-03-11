@@ -1,4 +1,4 @@
---Starting Options  {{{
+-- Starting Options  {{{
 vim.cmd.colorscheme('habamax')
 vim.g.mapleader = ' '
 vim.g.netrw_banner = 0
@@ -24,6 +24,7 @@ vim.opt.undofile = true
 vim.opt.wildignore = { '*.git/*', '*/.hg/*', '*.DS_Store' }
 vim.opt.wrap = true
 vim.opt.writebackup = false
+vim.opt.hidden = false
 
 -- Abbreviations (triggered by entering a sequence and <space> in insert mode)
 vim.cmd([[
@@ -167,6 +168,17 @@ end, {
   end,
   nargs = 1
 })
+
+-- Generate help tags for installed plugins
+vim.api.nvim_create_user_command('Helptags', function()
+  local doc_paths = vim.fn.expand('/Users/ethanhsu/.config/nvim/pack/plugins/start/*/doc/')
+  doc_paths = doc_paths:gsub('\n', ' ')
+  print(doc_paths)
+  for doc_path in string.gmatch(doc_paths, "[^%s]+") do
+    vim.cmd('helptags ' .. doc_path)
+  end
+end, {}
+)
 -- }}}
 
 -- Telescope {{{
@@ -211,10 +223,10 @@ if hasTelescope then
   local utils = require('telescope.utils')
 
   vim.keymap.set('n', '<C-p>', builtin.find_files)
-  vim.keymap.set('n', '<leader>te', builtin.resume)
   vim.keymap.set('n', '<leader>ff',
     function() builtin.find_files({ find_command = { 'rg', '--files', '--no-ignore-vcs', } }) end)
-  vim.keymap.set('n', '<leader>fs', builtin.live_grep)
+  vim.keymap.set('n', '<leader>fs',
+    function() builtin.live_grep({ additional_args = { '--no-ignore-vcs' } }) end)
 
   vim.keymap.set('n', '<leader>bf', builtin.buffers)
   vim.keymap.set('n', '<leader>bs', function()
@@ -246,6 +258,8 @@ if hasTelescope then
     end
     builtin.live_grep({ search_dirs = results })
   end)
+
+  vim.keymap.set('n', '<leader>te', builtin.resume)
 
   local function get_git_files(rev)
     local handle = io.popen("cd " .. vim.loop.cwd() .. "&& git rev-parse --show-toplevel")
