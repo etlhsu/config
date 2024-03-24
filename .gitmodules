@@ -14,6 +14,7 @@
 	path = .config/nvim/pack/plugins/start/lsp-zero.nvim
 	url = https://github.com/VonHeikemen/lsp-zero.nvim.git
 	branch = v2.x
+  ignore = dirty
 [submodule ".config/nvim/pack/plugins/start/nvim-lspconfig"]
 	path = .config/nvim/pack/plugins/start/nvim-lspconfig
 	url = https://github.com/neovim/nvim-lspconfig.git
@@ -34,6 +35,7 @@
 	path = .config/nvim/pack/plugins/start/LuaSnip
 	url = https://github.com/L3MON4D3/LuaSnip.git
 	branch = master
+  ignore = dirty
 [submodule ".config/nvim/telescope.nvim"]
 	path = .config/nvim/telescope.nvim
 	url = https://github.com/nvim-telescope/telescope.nvim.git

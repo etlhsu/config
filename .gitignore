@@ -18,8 +18,6 @@
 !.config/nvim/pack/plugins/
 !.config/nvim/pack/plugins/start/
 !.config/nvim/pack/plugins/start/*
-!.config/nvim/pack/plugins/start/catppuccin/
-!.config/nvim/pack/plugins/start/catppuccin/*
 !.config/tmux/
 !.config/tmux/*
 !.rgignore
