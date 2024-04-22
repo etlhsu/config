@@ -1,9 +1,16 @@
 # The Structured Yet Unstructured Guide
 
 ## Tmux
-`Ctrl+B` is the prefix key which can be combined with other keys to perform actions
+`Ctrl+B` is the prefix key which can be combined with other keys to perform actions:
+- `?` - see of all of the actions
 - `%` - split pane vertically
 - `"` - split pane horizontally
+- `w` - select window
+- `s` - select session
+- `D` - select client
+
+Use `Ctrl+B`+`:` to enter commands:
+- `:new` - Create a new session
 
 ## Neovim
 
@@ -12,8 +19,8 @@
 - `zR` - Open all folds
 
 ### Spelling
-- `set spell/nospell` - Enable/disable spelling for a buffer
-- `[s/]s` - Go to previous/next misspelled word
+- `set spell`/`nospell` - Enable/disable spelling for a buffer
+- `[s`/`]s` - Go to previous/next misspelled word
 - `z=` Find suggestions for the misspelled word under the cursor
 
 ### Substitution
