@@ -8,6 +8,7 @@ vim.g.netrw_winsize = 20
 vim.opt.autowriteall = true
 vim.opt.backup = false
 vim.opt.colorcolumn = '100'
+vim.opt.textwidth = 100
 vim.opt.completeopt = { 'menu', 'menuone', 'noselect', 'noinsert' }
 vim.opt.expandtab = true
 vim.opt.foldmethod = 'marker'

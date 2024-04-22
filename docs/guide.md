@@ -13,6 +13,7 @@ Use `Ctrl+B`+`:` to enter commands:
 - `:new` - Create a new session
 
 ## Neovim
+- `gq_` - Reformat text to fit
 
 ### Folds
 - `zM` - Close all folds
