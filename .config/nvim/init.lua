@@ -1,5 +1,5 @@
 -- Starting Options  {{{
-vim.cmd.colorscheme('habamax')
+vim.cmd.colorscheme('retrobox')
 vim.g.mapleader = ' '
 vim.g.netrw_banner = 0
 vim.g.netrw_hide = 1
