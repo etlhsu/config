@@ -5,7 +5,6 @@
 !.zshenv
 !.vimrc
 !.gitconfig
-!.profile
 !.config/
 !.config/bin/
 !.config/bin/*

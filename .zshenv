@@ -130,3 +130,4 @@ vx() {
   rev="$(echo $commits | fzf --layout=reverse-list | cut -d ' ' -f1)"
   echo "$rev"
 }
+. "$HOME/.cargo/env"

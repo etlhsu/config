@@ -3,7 +3,7 @@ vim.cmd.colorscheme('retrobox')
 vim.g.mapleader = ' '
 vim.g.netrw_banner = 0
 vim.g.netrw_hide = 1
-vim.g.netrw_list_hide = '^./$,^../$,.DS_Store';
+vim.g.netrw_list_hide = '^\\./$,^\\.\\./$,.DS_Store';
 vim.g.netrw_winsize = 20
 vim.opt.autowriteall = true
 vim.opt.backup = false
