@@ -1,4 +1,4 @@
--- Starting Options  {{{
+-- Starting Options
 vim.cmd.colorscheme('retrobox')
 vim.g.mapleader = ' '
 vim.g.netrw_banner = 0
@@ -58,7 +58,7 @@ vim.api.nvim_create_autocmd({ 'TermOpen' },
   { pattern = '*', callback = function() vim.cmd([[setlocal nonumber signcolumn=no" | startinsert]]) end })
 -- }}}
 
--- Keymaps {{{
+-- Keymaps
 -- Begin escaping terminal insert mode using Ctrl-W
 vim.keymap.set('t', '<C-w>', '<C-\\><C-n><C-w>')
 -- Go to import section in Java/Kotlin
@@ -90,7 +90,7 @@ vim.keymap.set('n', '<C-e>', function()
 end)
 -- }}}
 
--- Commands {{{
+-- Commands
 
 -- Reload init.lua quickly
 vim.api.nvim_create_user_command('Soi', function() vim.cmd([[source ~/.config/nvim/init.lua]]) end, {})
@@ -182,7 +182,7 @@ end, {}
 )
 -- }}}
 
--- Telescope {{{
+-- Telescope
 local hasTelescope, telescope = pcall(require, 'telescope')
 local filter = vim.tbl_filter
 Path = require("plenary.path")
@@ -301,12 +301,13 @@ if hasTelescope then
 end
 -- }}}
 
--- Treesitter and LSP {{{
+-- Treesitter and LSP
 local hasTreesitterConfigs, treesitterConfigs = pcall(require, 'nvim-treesitter.configs')
 
 if hasTreesitterConfigs then
   treesitterConfigs.setup {
-    ensure_installed = { 'astro', 'bash', 'c', 'css', 'go', 'html', 'java', 'kotlin', 'lua', 'markdown', 'markdown_inline', 'proto', 'query', 'tsx', 'typescript', 'vim', 'vimdoc' },
+    ensure_installed = { 'astro', 'bash', 'c', 'css', 'go', 'html', 'java', 'kotlin', 'lua', 'markdown',
+      'markdown_inline', 'proto', 'query', 'tsx', 'typescript', 'vim', 'vimdoc' },
     highlight = { enable = true }, }
 end
 
