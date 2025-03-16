@@ -54,7 +54,7 @@ vim.api.nvim_create_autocmd({ 'FocusGained', 'BufEnter' },
 vim.api.nvim_create_autocmd({ 'InsertLeavePre', 'TextChanged' },
   { pattern = '*', callback = function() EditBuf([[silent! write]]) end })
 -- Configure new terminals with no line numbers and begin them in insert mode
-vim.api.nvim_create_autocmd({'TermOpen'},
+vim.api.nvim_create_autocmd({ 'TermOpen' },
   { pattern = '*', callback = function() vim.cmd([[setlocal nonumber signcolumn=no" | startinsert]]) end })
 -- }}}
 
@@ -64,7 +64,7 @@ vim.keymap.set('t', '<C-w>', '<C-\\><C-n><C-w>')
 -- Go to import section in Java/Kotlin
 vim.keymap.set('n', '<leader>gi', '?^import.*\\n.*\\n<CR>:noh<CR>')
 vim.keymap.set('n', '<leader>gr', function()
--- Replace current word
+  -- Replace current word
   vim.api.nvim_feedkeys(':%s/' .. vim.fn.expand('<cword>') .. '/', 'n', {})
 end)
 -- Replace current WORD
@@ -250,7 +250,7 @@ if hasTelescope then
   vim.keymap.set('n', '<leader>hs', builtin.help_tags)
 
   vim.keymap.set('n', '<leader>of', builtin.oldfiles)
-  vim.keymap.set('n', '<leader>os', function ()
+  vim.keymap.set('n', '<leader>os', function()
     local results = {}
     for _, v in pairs(vim.v.oldfiles) do
       if vim.fn.isdirectory(v) == 0 then
@@ -269,10 +269,10 @@ if hasTelescope then
     handle:close()
 
     local files = {}
-    for _, file in pairs(utils.get_os_command_output({"git", "diff", rev, "--name-only", }, root)) do
+    for _, file in pairs(utils.get_os_command_output({ "git", "diff", rev, "--name-only", }, root)) do
       table.insert(files, root .. file)
     end
-    for _, file in pairs(utils.get_os_command_output({"git", "ls-files", "--others", "--exclude-standard", }, root)) do
+    for _, file in pairs(utils.get_os_command_output({ "git", "ls-files", "--others", "--exclude-standard", }, root)) do
       table.insert(files, root .. file)
     end
 
@@ -283,22 +283,21 @@ if hasTelescope then
   end
 
   vim.keymap.set('n', '<leader>vf', function()
-    builtin.find_files({search_dirs=get_git_files("HEAD~1")})
+    builtin.find_files({ search_dirs = get_git_files("HEAD~1") })
   end
   )
   vim.keymap.set('n', '<leader>vaf', function()
-    builtin.find_files({search_dirs=get_git_files("HEAD~3")})
+    builtin.find_files({ search_dirs = get_git_files("HEAD~3") })
   end
   )
   vim.keymap.set('n', '<leader>vs', function()
-    builtin.live_grep({search_dirs=get_git_files("HEAD~1")})
+    builtin.live_grep({ search_dirs = get_git_files("HEAD~1") })
   end
   )
   vim.keymap.set('n', '<leader>vas', function()
-    builtin.live_grep({search_dirs=get_git_files("HEAD~3")})
+    builtin.live_grep({ search_dirs = get_git_files("HEAD~3") })
   end
   )
-
 end
 -- }}}
 
@@ -307,7 +306,7 @@ local hasTreesitterConfigs, treesitterConfigs = pcall(require, 'nvim-treesitter.
 
 if hasTreesitterConfigs then
   treesitterConfigs.setup {
-    ensure_installed = { 'astro', 'bash', 'css', 'html', 'java', 'kotlin', 'lua', 'tsx', 'typescript', 'vimdoc' },
+    ensure_installed = { 'astro', 'bash', 'c', 'css', 'go', 'html', 'java', 'kotlin', 'lua', 'markdown', 'markdown_inline', 'proto', 'query', 'tsx', 'typescript', 'vim', 'vimdoc' },
     highlight = { enable = true }, }
 end
 
@@ -336,4 +335,8 @@ if hasLspZero and hasLspConfig and hasCmp then
   vim.keymap.set('n', '<leader>lf', vim.lsp.buf.format)
   vim.keymap.set('n', '<leader>la', vim.lsp.buf.code_action)
 end
+
+vim.keymap.set('n', '<leader>K', function()
+  vim.diagnostic.open_float()
+end)
 -- }}}

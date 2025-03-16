@@ -1,5 +1,21 @@
 # The Structured Yet Unstructured Guide
 
+## Unix
+
+
+### Commands
+- `command &` launch a command in the background
+
+
+#### Grep
+- `grep -rl matchstring somedir/` - returns files matching a certain `matchstring`
+- `| grep -o matchstring` - returns *o*nly matched parts from piped-in input
+
+
+#### Sed
+- `| xargs sed -i 's/string1/string2/g'` - Performs find and replace on piped-in files
+- `sed 'x!d' file` - Returns line x of a file
+
 ## Tmux
 `Ctrl+B` is the prefix key which can be combined with other keys to perform actions:
 - `?` - see of all of the actions
@@ -14,6 +30,13 @@ Use `Ctrl+B`+`:` to enter commands:
 
 ## Neovim
 - `gq_` - Reformat text to fit
+- `Ctrl+G` - print file path
+- `1``Ctrl+G` - print absolute file path
+- `2``Ctrl+G` - print absolute file path with buffer number
+- `<c-r>"` - paste from unnamed buffer in telescope prompt
+
+### Netrw
+- `R` Renames a file/folder
 
 ### Folds
 - `zM` - Close all folds
