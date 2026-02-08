@@ -1,11 +1,9 @@
-# The Structured Yet Unstructured Guide
+# Technical Guide
 
 ## Unix
 
-
 ### Commands
 - `command &` launch a command in the background
-
 
 #### Grep
 - `grep -rl matchstring somedir/` - returns files matching a certain `matchstring`
@@ -66,7 +64,3 @@ select out in a b c d; do
   break # If single shot
 done
 ```
-### Random Commands
-* `^N` - accept suggestion 
-* `\` - decline suggestion
-* `zle -la` - list all zsh widgets

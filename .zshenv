@@ -1,14 +1,3 @@
-# Environment Variables
-export cb="$HOME/.config/bin"
-export ck="$HOME/.config/kit"
-export cn="$HOME/.config/nvim"
-export cs="$HOME/.config/sample"
-
-export pb="$HOME/personal/bin"
-export pp="$HOME/personal/pile"
-export pk="$HOME/personal/kits"
-export ps="$HOME/personal/space"
-
 # Configuration
 autoload -U colors && colors
 
@@ -26,16 +15,15 @@ spin-key() spin refresh
 zle -N spin-key 
 bindkey '^E' spin-key
 
+export ANDROID_EMULATOR_WAIT_TIME_BEFORE_KILL=60
 export FZF_DEFAULT_COMMAND='rg --files --no-ignore-vcs --hidden'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF__DEFAULT_OPTS=''
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 path+="$HOME/.config/bin"
-path+="$HOME/personal/bin"
-export PATH
-export ANDROID_EMULATOR_WAIT_TIME_BEFORE_KILL=60
 
 # Utilities
+
 mkcd() {
    mkdir $1
    cd $1
@@ -57,7 +45,6 @@ checkgitenv() {
 }
 
 minprompt() {
-
   if git rev-parse --is-inside-work-tree &> /dev/null; then
     prompt_root=~/.config/.prompt/$(basename $(git rev-parse --show-toplevel))
     if [ ! -d $prompt_root ]; then
@@ -99,7 +86,6 @@ minprompt() {
   echo -ne '\e[6 q'
 }
 
-KEYTIMEOUT=5
 function zle-keymap-select {
   if [[ ${KEYMAP} == vicmd ]] ||
      [[ $1 = 'block' ]]; then
@@ -119,11 +105,6 @@ precmd() {
 preexec() {
    echo -ne '\e[2 q'
 }
-
-alias sn="spin none"
-alias soe="source ~/.zshenv"
-alias sor="source ~/.zshrc"
-
 vx() {
   commits="$(git xl | grep -Eo '\*.+' | cut -d ' ' -f2-)"
   echo $commits

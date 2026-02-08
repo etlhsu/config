@@ -1,4 +1,4 @@
-#!/usr/bin/env zsh
+#!/usr/bin/env bash
 
 [[ ! -d "$HOME/.config/.spin" ]] && mkdir -p $HOME/.config/.spin
 if [[ $1 == "refresh" ]]; then

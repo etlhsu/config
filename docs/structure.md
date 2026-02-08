@@ -1,6 +1,5 @@
-### Structure
-I generall use top-level folders organized by general category. Then I introduce the following kinds of subfolders:
-* `tub/` - for everything else, structured
-  * `pile/` - for everything else, unstructured
-* `space/` - a temporary environment for trying things out
+# Structure
+I generally use top-level folders organized by general category, with specific kinds of subfolders:
 * `*/` - keep important projects at their own folders
+* `space/` - a temporary environment for trying things out
+* `pile/` - for everything else
