@@ -9,7 +9,7 @@
 !.config/**
 !.config/bin/*
 !.config/nvim/*
-!.config/nvim/pack/plugins/start/*
+!.config/nvim/pack/plugins/start/
 !.config/tmux/*
 !.rgignore
 !.tmux.conf

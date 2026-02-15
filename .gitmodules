@@ -10,39 +10,14 @@
 	path = .config/nvim/pack/plugins/start/nvim-treesitter.nvim
 	url = https://github.com/nvim-treesitter/nvim-treesitter.git
 	branch = master
-[submodule ".config/nvim/pack/plugins/start/lsp-zero.nvim"]
-	path = .config/nvim/pack/plugins/start/lsp-zero.nvim
-	url = https://github.com/VonHeikemen/lsp-zero.nvim.git
-	branch = v2.x
-  ignore = dirty
 [submodule ".config/nvim/pack/plugins/start/nvim-lspconfig"]
 	path = .config/nvim/pack/plugins/start/nvim-lspconfig
 	url = https://github.com/neovim/nvim-lspconfig.git
 	branch = master
-[submodule ".config/nvim/pack/plugins/start/nvim-cmp"]
-	path = .config/nvim/pack/plugins/start/nvim-cmp
-	url = https://github.com/hrsh7th/nvim-cmp.git
-	branch = main
-[submodule ".config/nvim/pack/plugins/start/cmp-nvim-lsp"]
-	path = .config/nvim/pack/plugins/start/cmp-nvim-lsp
-	url = https://github.com/hrsh7th/cmp-nvim-lsp.git
-	branch = main
-[submodule ".config/nvim/pack/plugins/start/kotlin-vim"]
-	path = .config/nvim/pack/plugins/start/kotlin-vim
-	url = https://github.com/udalov/kotlin-vim.git
-	branch = master
-[submodule ".config/nvim/pack/plugins/start/LuaSnip"]
-	path = .config/nvim/pack/plugins/start/LuaSnip
-	url = https://github.com/L3MON4D3/LuaSnip.git
-	branch = master
-  ignore = dirty
 [submodule ".config/nvim/telescope.nvim"]
 	path = .config/nvim/telescope.nvim
 	url = https://github.com/nvim-telescope/telescope.nvim.git
 	branch = master
-[submodule ".config/nvim/pack/plugins/start/catppuccin/nvim"]
-	path = .config/nvim/pack/plugins/start/catppuccin/nvim
-	url = https://github.com/catppuccin/nvim.git
-[submodule ".config/nvim/pack/plugins/start/nvim-colorizer.lua"]
-	path = .config/nvim/pack/plugins/start/nvim-colorizer.lua
-	url = https://github.com/NvChad/nvim-colorizer.lua.git
+[submodule ".config/nvim/pack/plugins/start/mini.nvim"]
+	path = .config/nvim/pack/plugins/start/mini.nvim
+	url = https://github.com/nvim-mini/mini.nvim.git

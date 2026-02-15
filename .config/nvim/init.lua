@@ -1,31 +1,19 @@
 -- Starting Options
-vim.cmd.colorscheme('retrobox')
+vim.opt.autowriteall = true
+vim.opt.colorcolumn = '100'
+vim.opt.completeopt = { "menu", "menuone", "noselect", "noinsert" }
+vim.opt.gdefault = true
+vim.opt.hidden = false
+vim.opt.number = true
+vim.opt.shiftwidth = 2
+vim.opt.swapfile = false
+vim.opt.undofile = true
+vim.opt.splitbelow = true
 vim.g.mapleader = ' '
 vim.g.netrw_banner = 0
-vim.g.netrw_hide = 1
 vim.g.netrw_list_hide = '^\\./$,^\\.\\./$,.DS_Store';
 vim.g.netrw_winsize = 20
-vim.opt.autowriteall = true
-vim.opt.backup = false
-vim.opt.colorcolumn = '100'
-vim.opt.textwidth = 100
-vim.opt.completeopt = { 'menu', 'menuone', 'noselect', 'noinsert' }
-vim.opt.expandtab = true
-vim.opt.foldmethod = 'marker'
-vim.opt.gdefault = true
-vim.opt.number = true
-vim.opt.scrolloff = 20
-vim.opt.shada = "'300,h" -- Allow for 300 oldfiles and prevent highlighting the saved search
-vim.opt.shiftwidth = 2
-vim.opt.smartindent = true
-vim.opt.splitbelow = true
-vim.opt.swapfile = false
-vim.opt.tabstop = 2
-vim.opt.undofile = true
-vim.opt.wildignore = { '*.git/*', '*/.hg/*', '*.DS_Store' }
-vim.opt.wrap = true
-vim.opt.writebackup = false
-vim.opt.hidden = false
+vim.cmd.colorscheme('retrobox')
 
 -- Abbreviations (triggered by entering a sequence and <space> in insert mode)
 vim.cmd([[
@@ -40,60 +28,31 @@ vim.cmd([[
   Eia moci import org.mockito.kotlin.
   Eia comi import androidx.compose.
 ]])
+
 -- Navigate netrw like ranger
 vim.cmd([[ au filetype netrw map <buffer> h -^| map <buffer> l <CR>| map <buffer> . gh| ]])
 vim.cmd([[ au filetype netrw map <buffer> L <CR><C-R>=vim.g.netrw_preview| ]])
 
-local function EditBuf(cmd)
-  if vim.fn.getcmdwintype() == "" and vim.api.nvim_win_get_config(0).relative == "" then vim.cmd(cmd) end
-end
 -- Automatically read a file when re-entered
 vim.api.nvim_create_autocmd({ 'FocusGained', 'BufEnter' },
-  { pattern = '*', callback = function() EditBuf([[checktime]]) end })
+ { pattern = '*', callback = function() vim.cmd.checktime() end })
 -- Automatically write a file upon a change in insert mode or normal mode
-vim.api.nvim_create_autocmd({ 'InsertLeavePre', 'TextChanged' },
-  { pattern = '*', callback = function() EditBuf([[silent! write]]) end })
--- Configure new terminals with no line numbers and begin them in insert mode
-vim.api.nvim_create_autocmd({ 'TermOpen' },
-  { pattern = '*', callback = function() vim.cmd([[setlocal nonumber signcolumn=no" | startinsert]]) end })
--- }}}
+ vim.api.nvim_create_autocmd({ 'InsertLeavePre', 'TextChanged' },
+-- { pattern = '*', callback = function() EditBuf([[silent! write]]) end }) 
+ { pattern = '*', callback = function() vim.cmd.w({ bang = true, mods = { silent = true, emsg_silent = true }}) end })
 
 -- Keymaps
 -- Begin escaping terminal insert mode using Ctrl-W
 vim.keymap.set('t', '<C-w>', '<C-\\><C-n><C-w>')
 -- Go to import section in Java/Kotlin
 vim.keymap.set('n', '<leader>gi', '?^import.*\\n.*\\n<CR>:noh<CR>')
-vim.keymap.set('n', '<leader>gr', function()
-  -- Replace current word
-  vim.api.nvim_feedkeys(':%s/' .. vim.fn.expand('<cword>') .. '/', 'n', {})
-end)
--- Replace current WORD
-vim.keymap.set('n', '<leader>gR', function()
-  vim.api.nvim_feedkeys(':%s/' .. vim.fn.expand('<cWORD>') .. '/', 'n', {})
-end)
--- Go to file (searches oldfiles)
-vim.keymap.set({ 'n', 'v', 'o' }, '<leader>gf', function()
-  local symbol = vim.fn.expand('<cword>')
-  for k, file in pairs(vim.v.oldfiles) do
-    if file:find(symbol) ~= nil then
-      -- open file
-      vim.cmd('e ' .. file)
-      return
-    end
-  end
-  print("No associated file found for: " .. symbol)
-end)
 -- Command spinning using Ctrl+e
 vim.keymap.set('n', '<C-e>', function()
   vim.fn.system { vim.env.HOME .. '/.config/bin/spin', 'refresh' }
   print("Spining...")
 end)
--- }}}
 
 -- Commands
-
--- Reload init.lua quickly
-vim.api.nvim_create_user_command('Soi', function() vim.cmd([[source ~/.config/nvim/init.lua]]) end, {})
 
 -- Create a file in the directory of the current file
 vim.api.nvim_create_user_command('E', function(opts)
@@ -143,44 +102,6 @@ vim.api.nvim_create_user_command('Mv', function(opts)
   os.remove(oldfile)
   vim.api.nvim_buf_delete(vim.fn.bufnr(old_bufname), {})
 end, { complete = 'file', nargs = 1 })
-
--- Apply a kit in the current directory
-vim.api.nvim_create_user_command('Kit', function(opts)
-  if vim.api.nvim_get_option_value('filetype', {}) ~= 'netrw' then
-    print("Kits can only be made inside netrw explorers")
-    return
-  end
-  local kit = vim.env.HOME .. '/personal/kits/' .. opts.args
-  local path = vim.fn.fnamemodify(vim.b.netrw_curdir, ':p')
-  os.execute('cp -R ' .. kit .. '/* ' .. path)
-  vim.cmd [[ e ]]
-end, {
-  complete = function(input)
-    local handle = io.popen('ls $HOME/personal/kits')
-    local results = handle:read("*a")
-    handle:close()
-    local completes = {}
-    for result in string.gmatch(results, "[^%s]+") do
-      if input ~= ' ' and result:find('^' .. input) ~= nil then
-        completes[#completes + 1] = result
-      end
-    end
-    return completes
-  end,
-  nargs = 1
-})
-
--- Generate help tags for installed plugins
-vim.api.nvim_create_user_command('Helptags', function()
-  local doc_paths = vim.fn.expand('/Users/ethanhsu/.config/nvim/pack/plugins/start/*/doc/')
-  doc_paths = doc_paths:gsub('\n', ' ')
-  print(doc_paths)
-  for doc_path in string.gmatch(doc_paths, "[^%s]+") do
-    vim.cmd('helptags ' .. doc_path)
-  end
-end, {}
-)
--- }}}
 
 -- Telescope
 local hasTelescope, telescope = pcall(require, 'telescope')
@@ -286,12 +207,12 @@ if hasTelescope then
     builtin.find_files({ search_dirs = get_git_files("HEAD~1") })
   end
   )
-  vim.keymap.set('n', '<leader>vaf', function()
-    builtin.find_files({ search_dirs = get_git_files("HEAD~3") })
-  end
-  )
   vim.keymap.set('n', '<leader>vs', function()
     builtin.live_grep({ search_dirs = get_git_files("HEAD~1") })
+  end
+  )
+  vim.keymap.set('n', '<leader>vaf', function()
+    builtin.find_files({ search_dirs = get_git_files("HEAD~3") })
   end
   )
   vim.keymap.set('n', '<leader>vas', function()
@@ -299,7 +220,6 @@ if hasTelescope then
   end
   )
 end
--- }}}
 
 -- Treesitter and LSP
 local hasTreesitterConfigs, treesitterConfigs = pcall(require, 'nvim-treesitter.configs')
@@ -310,34 +230,15 @@ if hasTreesitterConfigs then
       'markdown_inline', 'proto', 'query', 'tsx', 'typescript', 'vim', 'vimdoc' },
     highlight = { enable = true }, }
 end
-
-local hasLspZero, lspZero = pcall(require, 'lsp-zero')
-local hasLspConfig, lspconfig = pcall(require, 'lspconfig')
-local hasCmp, cmp = pcall(require, 'cmp')
-
-if hasLspZero and hasLspConfig and hasCmp then
-  local lsp = lspZero.preset({})
-  lsp.on_attach(function(_, bufnr)
-    lsp.default_keymaps({ buffer = bufnr })
-  end)
-  lsp.setup_servers({ 'astro', 'bashls', 'kotlin_language_server', 'lua_ls' })
-  lspconfig.lua_ls.setup(lsp.nvim_lua_ls({
-    root_dir = lspconfig.util.root_pattern('.luarc.json', vim.env.HOME .. '/.nvim/config'), }))
-  lsp.setup_nvim_cmp({
-    mapping = {
-      ["<C-p>"] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Insert }),
-      ["<C-n>"] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Insert }),
-      ["<C-y>"] = cmp.mapping.confirm({ select = true }),
-      ["<C-space>"] = cmp.mapping.complete(),
-    },
-  })
-  lsp.setup()
-  vim.keymap.set('n', '<leader>lr', vim.lsp.buf.rename)
-  vim.keymap.set('n', '<leader>lf', vim.lsp.buf.format)
-  vim.keymap.set('n', '<leader>la', vim.lsp.buf.code_action)
-end
-
-vim.keymap.set('n', '<leader>K', function()
-  vim.diagnostic.open_float()
-end)
--- }}}
+require('mini.snippets').setup({})
+require('mini.completion').setup({})
+vim.lsp.enable({'astro', 'bashls', 'kotlin_lsp', 'lua_ls'})
+vim.keymap.set('n', '<leader>ln', vim.lsp.buf.rename)
+vim.keymap.set('n', '<leader>la', vim.lsp.buf.code_action)
+vim.keymap.set('n', '<leader>lr', vim.lsp.buf.references)
+vim.keymap.set('n', '<leader>li', vim.lsp.buf.implementation)
+vim.keymap.set('n', '<leader>lt', vim.lsp.buf.type_definition)
+vim.keymap.set('n', '<leader>lo', vim.lsp.buf.document_symbol)
+vim.keymap.set('n', '<leader>lh', vim.lsp.buf.signature_help)
+vim.keymap.set('n', '<leader>lf', vim.lsp.buf.format)
+vim.keymap.set('n', '<leader>K', function() vim.diagnostic.open_float() end)
